@@ -23,6 +23,7 @@
  codecs = getElementByID("codecs");
  codec = codecs.value;
  result = null;
+ function bypass(){
  switch(codec) {
   case xor: 
     result = xor.encode(site.value);
@@ -37,8 +38,7 @@
     result = plain.encode(site.value)
     break;
  }
- alert(result)
+
+ alert(result);
+}
 </script>
-
-
-play.datadecay.dev
