@@ -6,8 +6,8 @@
   <option value="2">datadecay.koyeb.app</option>
   <option value="">Custom Site</option>
 </select>
-<input id="host">
-<input id="site">
+<input id="host" placeholder="Proxy Host (e.g. https://no.datadecay.dev/uv/)">
+<input id="site" placeholder="Site to visit (e.g. https://google.com)">
 <select name="codecs" id="codec">
   <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
   <option value="base64">base64 (none)</option>
@@ -22,6 +22,20 @@
   const host = document.getElementById("host");
   const site = document.getElementById("site");
   const codecs = document.getElementById("codec");
+  const preset = document.getElementById("preset");
+
+  preset.addEventListener("change", () => {
+    switch (preset.value) {
+      case "1":
+        host.value = "https://no.datadecay.dev/uv/";
+        break;
+      case "2":
+        host.value = "https://datadecay.koyeb.app/~/uv/";
+        break;
+      default:
+        host.value = "";
+    }
+  });
 
   function bypass() {
     const codec = codecs.value;
@@ -41,9 +55,15 @@
         result = plain.encode(site.value);
         break;
       default:
-        result = "Unknown codec!";
+        alert("Unknown codec!");
+        return;
     }
 
-    alert(result);
+    if (!host.value || !result) {
+      alert("Missing host or site.");
+      return;
+    }
+
+    //window.location.href = `${host.value}/service/${result}`;
   }
 </script>
