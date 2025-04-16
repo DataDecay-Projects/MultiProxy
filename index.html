@@ -1,75 +1,90 @@
 <!DOCTYPE html>
 <head>
   <title>Proxy Ad Bypass</title>
-  </head>
-  <body><h1>Proxy Ad Bypass</h1>
-<h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il)</h2>
-<hr/>
-<select name="presets" id="preset">
-  <option value="1">no.datadecay.dev</option>
-  <option value="2">datadecay.koyeb.app</option>
-  <option value="">Custom Site</option>
-</select>
-<input id="host" placeholder="Proxy Host (e.g. https://no.datadecay.dev/uv/)">
-<input id="site" placeholder="Site to visit (e.g. https://google.com)">
-<select name="codecs" id="codec">
-  <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
-  <option value="base64">base64 (none)</option>
-  <option value="incog">incognito custom codec</option>
-  <option value="plain">no encoding</option>
-</select>
-<button id="bypassbutton">Bypass!</button>
+</head>
+<body>
+  <h1>Proxy Ad Bypass</h1>
+  <h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il)</h2>
+  <hr/>
+  <select name="presets" id="preset">
+    <option value="1">no.datadecay.dev</option>
+    <option value="2">datadecay.koyeb.app</option>
+    <option value="">Custom Site</option>
+  </select>
+  <input id="host" placeholder="Proxy Host (e.g. https://no.datadecay.dev/uv/)">
 
-<script type="module">
-  import { xor, plain, base64, incog } from './codecs.js';
+  <div id="customInputs" style="display: none;">
+    <input id="site" placeholder="Site to visit (e.g. https://google.com)">
+    <select name="codecs" id="codec">
+      <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
+      <option value="base64">base64 (none)</option>
+      <option value="incog">incognito custom codec</option>
+      <option value="plain">no encoding</option>
+    </select>
+  </div>
 
-  const host = document.getElementById("host");
-  const site = document.getElementById("site");
-  const codecs = document.getElementById("codec");
-  const preset = document.getElementById("preset");
+  <button id="bypassbutton">Bypass!</button>
 
-  preset.addEventListener("change", () => {
-    switch (preset.value) {
-      case "1":
-        host.value = "https://no.datadecay.dev/uv/";
-        break;
-      case "2":
-        host.value = "https://datadecay.koyeb.app/~/uv/";
-        break;
-      default:
-        host.value = "";
-    }
-  });
+  <script type="module">
+    import { xor, plain, base64, incog } from './codecs.js';
 
-  function bypass() {
-    const codec = codecs.value;
-    let result;
+    const host = document.getElementById("host");
+    const site = document.getElementById("site");
+    const codecs = document.getElementById("codec");
+    const preset = document.getElementById("preset");
+    const customInputs = document.getElementById("customInputs");
+    host.value = "https://no.datadecay.dev/uv/";
 
-    switch(codec) {
-      case "xor":
-        result = xor.encode(site.value);
-        break;
-      case "base64":
-        result = base64.encode(site.value);
-        break;
-      case "incog":
-        result = incog.encode(site.value);
-        break;
-      case "plain":
-        result = plain.encode(site.value);
-        break;
-      default:
-        alert("Unknown codec!");
+    preset.addEventListener("change", () => {
+      switch (preset.value) {
+        case "1":
+          host.value = "https://no.datadecay.dev/uv/";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        case "2":
+          host.value = "https://datadecay.koyeb.app/~/uv/";
+          codecs.value = "incog";
+          customInputs.style.display = "none";
+          break;
+        default:
+          host.value = "";
+          codecs.value = "plain";
+          customInputs.style.display = "block";
+      }
+    });
+
+    function bypass() {
+      const codec = codecs.value;
+      let result;
+
+      switch(codec) {
+        case "xor":
+          result = xor.encode(site.value);
+          break;
+        case "base64":
+          result = base64.encode(site.value);
+          break;
+        case "incog":
+          result = incog.encode(site.value);
+          break;
+        case "plain":
+          result = plain.encode(site.value);
+          break;
+        default:
+          alert("Unknown codec!");
+          return;
+      }
+
+      if (!host.value || !result) {
+        alert("Missing host or site.");
         return;
+      }
+
+      //alert(result);
+      window.location.href = `${host.value}/${result}`;
     }
 
-    if (!host.value || !result) {
-      alert("Missing host or site.");
-      return;
-    }
-    alert(result);
-    //window.location.href = `${host.value}/${result}`;
-  }
-  document.getElementById("bypassbutton").addEventListener("click", bypass);
-</script>
+    document.getElementById("bypassbutton").addEventListener("click", bypass);
+  </script>
 </body>
