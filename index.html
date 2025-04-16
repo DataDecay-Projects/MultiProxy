@@ -18,7 +18,7 @@
   <option value="incog">incognito custom codec</option>
   <option value="plain">no encoding</option>
 </select>
-<button onclick="bypass();">Bypass!</button>
+<button id="bypassbutton">Bypass!</button>
 
 <script type="module">
   import { xor, plain, base64, incog } from './codecs.js';
@@ -70,5 +70,6 @@
     alert(result);
     //window.location.href = `${host.value}/${result}`;
   }
+  document.getElementById("bypassbutton").addEventListener("click", bypass);
 </script>
 </body>
