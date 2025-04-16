@@ -7,38 +7,43 @@
   <option value="">Custom</option>
 </select>
 <input id="host">
-<input id="site" >
+<input id="site">
 <select name="codecs" id="codec">
   <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
   <option value="base64">base64 (none)</option>
   <option value="incog">incognito custom codec</option>
   <option value="plain">no encoding</option>
 </select>
-<button onclick="bypass()">Bypass!</button>
-<script>
-  import {xor, plain, base64, incog} from './codecs.js';
- presets = getElementByID("presets");
- host = getElementByID("host");
- site = getElementByID("site");
- codecs = getElementByID("codecs");
- codec = codecs.value;
- result = null;
- function bypass(){
- switch(codec) {
-  case xor: 
-    result = xor.encode(site.value);
-    break;
-  case base64:
-    result = base64.encode(site.value);
-    break;
-  case incog:
-    result = incog.encode(site.value);
-    break;
-  case plain:
-    result = plain.encode(site.value)
-    break;
- }
+<button onclick="bypass();">Bypass!</button>
 
- alert(result);
-}
+<script type="module">
+  import { xor, plain, base64, incog } from './codecs.js';
+
+  const host = document.getElementById("host");
+  const site = document.getElementById("site");
+  const codecs = document.getElementById("codec");
+
+  function bypass() {
+    const codec = codecs.value;
+    let result;
+
+    switch(codec) {
+      case "xor":
+        result = xor.encode(site.value);
+        break;
+      case "base64":
+        result = base64.encode(site.value);
+        break;
+      case "incog":
+        result = incog.encode(site.value);
+        break;
+      case "plain":
+        result = plain.encode(site.value);
+        break;
+      default:
+        result = "Unknown codec!";
+    }
+
+    alert(result);
+  }
 </script>
