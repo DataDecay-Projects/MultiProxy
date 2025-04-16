@@ -81,8 +81,7 @@
         return;
       }
 
-      //alert(result);
-      window.location.href = `${host.value}/${result}`;
+      window.location.href = `${host.value}${result}`;
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
