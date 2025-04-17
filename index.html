@@ -217,11 +217,12 @@ site.addEventListener("keypress", function(event) {
       }
       ///*
 var win = window.open()
-var url = "${host.value}/${result}"
-var iframe = win.document.createElement('iframe')
+var url = `${host.value}/${result}`
+var body = win.document.createElement('body');
+var iframe = win.document.body.createElement('iframe')
 iframe.style.width = "100%";
 iframe.style.height = "100%";
-win.body.style.margin = 0;
+body.style.margin = 0;
 iframe.style.border = "none";
 iframe.src = url
 win.document.body.appendChild(iframe)//*/
