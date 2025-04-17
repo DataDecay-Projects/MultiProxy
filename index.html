@@ -20,7 +20,6 @@
       z-index: -1;
     }
   
-  
     h1 {
       font-size: 32px;
       color: #ff4a4a;
@@ -54,12 +53,25 @@
   
     select {
       background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
     }
+  
     option {
       background: rgba(255, 255, 255, 0.072);
+      border-radius: 4px;
+      padding: 10px;
     }
+  
+    option:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  
     optgroup {
-      background: rgba(255, 255, 255, 0.072);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #ff6666;
     }
   
     button {
@@ -83,18 +95,142 @@
     a {
       color: #ffaaaa;
     }
-    canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container ---- */ #particles-js{ position:absolute; width: 100%; height: 100%; background-color: #000000; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } 
+  
+    canvas {
+      display: block;
+      vertical-align: bottom;
+    }
+  
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50% 50%;
+    }
   </style>
 </head>
 <body>
-  <!-- particles.js container --> <div id="particles-js"></div> <!-- stats - count particles -->particles </div> <!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+  <div id="particles-js"></div>
+  <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    particlesJS("particles-js", {"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#ff0000"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":6},"image":{"src":"","width":100,"height":100}},"opacity":{"value":0.4890406785639845,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":false,"anim":{"enable":false,"speed":114.50288693448967,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ff0000","opacity":0.4,"width":3},"move":{"enable":true,"speed":12.827296486924183,"direction":"bottom-right","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ff0000"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 6
+          },
+          "image": {
+            "src": "",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.4890406785639845,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 114.50288693448967,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff0000",
+          "opacity": 0.4,
+          "width": 3
+        },
+        "move": {
+          "enable": true,
+          "speed": 12.827296486924183,
+          "direction": "bottom-right",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
   </script>
-  <main>
+
     <h1>MultiProxy</h1>
     <h2>Ignore those pesky ads on proxies (ahem, tinf0il) and use a clean UI!<br>By DataDecay</h2>
-    <h3>later this won't look like absolute shit</h3>
+    <h3>Later this won't look like absolute shit</h3>
     <hr/>
     <input id="site" placeholder="Site to visit">
     <select name="presets" id="preset">
@@ -120,6 +256,7 @@
     </div>
 
     <button id="bypassbutton">Bypass!</button>
+
     <script type="module">
       import { xor, plain, base64, incog } from './codecs.js';
   
@@ -170,16 +307,16 @@
         }
       });
       function toURL(input) {
-    try {
-      const url = new URL(input);
-      return url.href;
-    } catch {
-      if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
-        return 'https://' + input;
+        try {
+          const url = new URL(input);
+          return url.href;
+        } catch {
+          if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
+            return 'https://' + input;
+          }
+          return 'https://www.google.com/search?q=' + encodeURIComponent(input);
+        }
       }
-      return 'https://www.google.com/search?q=' + encodeURIComponent(input);
-    }
-  }
   
       function bypass() {
         const codec = codecs.value;
@@ -215,8 +352,5 @@
     </script>
     <h5>Check out my <a href="https://github.com/DataDecay">Github</a> or <a href="https://github.com/DataDecay-Projects">Projects</a>.</h5>
     <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
-  </main>
-
-  
 </body>
 </html>
