@@ -28,7 +28,6 @@
       margin: 0 auto;
       background: rgba(255, 0, 0, 0.05);
       border-radius: 20px;
-      backdrop-filter: blur(10px);
       box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
     }
   
@@ -92,8 +91,129 @@
 </head>
 <body>
   <div id="particles-js"></div>
+  <script src="
+  https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js
+  "></script>
+  <script>
 
-<script src="particles.js"></script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 80,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#ff0000"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000000"
+      },
+      "polygon": {
+        "nb_sides": 6
+      },
+      "image": {
+        "src": "img/github.svg",
+        "width": 100,
+        "height": 100
+      }
+    },
+    "opacity": {
+      "value": 0.4890406785639845,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 3,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 114.50288693448967,
+        "size_min": 0.1,
+        "sync": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#ff0000",
+      "opacity": 0.4,
+      "width": 3
+    },
+    "move": {
+      "enable": true,
+      "speed": 12.827296486924183,
+      "direction": "bottom-right",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": {
+        "enable": false,
+        "rotateX": 600,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "onclick": {
+        "enable": false,
+        "mode": "push"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 400,
+        "line_linked": {
+          "opacity": 1
+        }
+      },
+      "bubble": {
+        "distance": 400,
+        "size": 40,
+        "duration": 2,
+        "opacity": 8,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 200,
+        "duration": 0.4
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true
+});
+
+
+
+update = function() {
+  requestAnimationFrame(update);
+};
+requestAnimationFrame(update);
+  </script>
   <main>
     <h1>MultiProxy</h1>
     <h2>Ignore those pesky ads on proxies (ahem, tinf0il) and use a clean UI!<br>By DataDecay</h2>
@@ -123,13 +243,103 @@
     </div>
 
     <button id="bypassbutton">Bypass!</button>
-
+    <script type="module">
+      import { xor, plain, base64, incog } from './codecs.js';
+  
+      const host = document.getElementById("host");
+      const site = document.getElementById("site");
+      const codecs = document.getElementById("codec");
+      const preset = document.getElementById("preset");
+      const customInputs = document.getElementById("customInputs");
+      host.value = "https://no.datadecay.dev/uv/service";
+  
+      preset.addEventListener("change", () => {
+        switch (preset.value) {
+          case "1":
+            host.value = "https://no.datadecay.dev/uv/service";
+            codecs.value = "xor";
+            customInputs.style.display = "none";
+            break;
+          case "2":
+            host.value = "https://datadecay.koyeb.app/~/uv";
+            codecs.value = "incog";
+            customInputs.style.display = "none";
+            break;
+          case "3":
+            host.value = "https://datadecay.koyeb.app/~/scramjet";
+            codecs.value = "plain";
+            customInputs.style.display = "none";
+            break;
+          case "4":
+            host.value = "https://orbitmc.lol/@/space";
+            codecs.value = "xor";
+            customInputs.style.display = "none";
+            break;
+          case "5":
+            host.value = "https://solve.guide.wedevforyou.com/math";
+            codecs.value = "xor";
+            customInputs.style.display = "none";
+            break;
+          case "6":
+            host.value = "https://hello.you.videomixargentina.com/@/daydream";
+            codecs.value = "xor";
+            customInputs.style.display = "none";
+            break;
+          default:
+            alert("Make sure you know what you are doing!");
+            host.value = "";
+            codecs.value = "plain";
+            customInputs.style.display = "block";
+        }
+      });
+      function toURL(input) {
+    try {
+      const url = new URL(input);
+      return url.href;
+    } catch {
+      if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
+        return 'https://' + input;
+      }
+      return 'https://www.google.com/search?q=' + encodeURIComponent(input);
+    }
+  }
+  
+      function bypass() {
+        const codec = codecs.value;
+        let result;
+        let toencode;
+        toencode = toURL(site.value)
+        switch(codec) {
+          case "xor":
+            result = xor.encode(toencode);
+            break;
+          case "base64":
+            result = base64.encode(toencode);
+            break;
+          case "incog":
+            result = incog.encode(toencode);
+            break;
+          case "plain":
+            result = plain.encode(toencode);
+            break;
+          default:
+            alert("Unknown codec!");
+            return;
+        }
+  
+        if (!host.value || !result) {
+          alert("Missing host or site.");
+          return;
+        }
+        window.open(`${host.value}/${result}`, '_blank');
+      }
+  
+      document.getElementById("bypassbutton").addEventListener("click", bypass);
+    </script>
     <h5>Check out my <a href="https://github.com/DataDecay">Github</a> or <a href="https://github.com/DataDecay-Projects">Projects</a>.</h5>
     <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
   </main>
 
-  <script src="
-https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js
-"></script>
+  
 </body>
 </html>
