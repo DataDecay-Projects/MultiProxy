@@ -3,354 +3,207 @@
 <head>
   <title>Proxy Ad Bypass</title>
   <style>
-    html, body {
+    body {
+      background: white;
+      color: black;
+      font-family: monospace;
       margin: 0;
-      padding: 0;
-      font-family: 'Courier New', Courier, monospace;
-      background: black;
-      color: white;
-      height: 100%;
-      overflow: hidden;
+      padding: 20px;
     }
-  
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  
+
     h1 {
-      font-size: 32px;
-      color: #ff4a4a;
-      margin-bottom: 10px;
+      /*background: #0066cc;*/
+      color: black;
+      padding: 10px;
+      margin: 0;
+      font-size: 20px;
+      /*border: 2px solid black;*/
     }
-  
-    h2, h3, h5 {
-      color: #ffcccc;
-      margin-bottom: 20px;
+
+    h2 {
+      font-size: 14px;
+      margin: 10px 0;
+      /*background: #e1e1e1;*/
+      padding: 8px;
+      /*border: 2px solid black;*/
+      color: #333;
     }
-  
+    h3 {
+      font-size: 10px;
+      margin: 10px 0;
+      /*background: #e1e1e1;*/
+      padding: 8px;
+      /*border: 2px solid black;*/
+      color: #333;
+    }
     hr {
       border: none;
       height: 2px;
-      background: #ff3333;
+      background: black;
       margin: 20px 0;
     }
-  
+
     input, select, button {
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
       margin-top: 10px;
       margin-bottom: 10px;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      outline: none;
+      /*border: 2px solid black;*/
+      border-radius: 0;
+      background: #f4f4f4;
+      color: black;
     }
-  
+
     select {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
+      background: #d0d0d0;
     }
-  
-    option {
-      background: rgba(255, 255, 255, 0.072);
-      border-radius: 4px;
-      padding: 10px;
-    }
-  
-    option:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-  
-    optgroup {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 5px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      color: #ff6666;
-    }
-  
+
     button {
-      background: #ff3333;
+      color: white;
       font-weight: bold;
-      transition: 0.3s;
+      cursor: pointer;
+      background: #00c100;
     }
-  
+
     button:hover {
-      background: #cc0000;
+      background: #009900;
     }
-  
+
     #customInputs {
       margin-top: 10px;
       padding: 10px;
-      border: 2px dashed #ff6666;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-    }
-  
-    a {
-      color: #ffaaaa;
-    }
-  
-    canvas {
-      display: block;
-      vertical-align: bottom;
-    }
-  
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: 50% 50%;
+      border: 2px dashed #888;
+      background: #fafafa;
     }
   </style>
 </head>
 <body>
-  <div id="particles-js"></div>
-  <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": {
-          "value": 80,
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "color": {
-          "value": "#ff0000"
-        },
-        "shape": {
-          "type": "circle",
-          "stroke": {
-            "width": 0,
-            "color": "#000000"
-          },
-          "polygon": {
-            "nb_sides": 6
-          },
-          "image": {
-            "src": "",
-            "width": 100,
-            "height": 100
-          }
-        },
-        "opacity": {
-          "value": 0.4890406785639845,
-          "random": false,
-          "anim": {
-            "enable": false,
-            "speed": 1,
-            "opacity_min": 0.1,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 3,
-          "random": false,
-          "anim": {
-            "enable": false,
-            "speed": 114.50288693448967,
-            "size_min": 0.1,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#ff0000",
-          "opacity": 0.4,
-          "width": 3
-        },
-        "move": {
-          "enable": true,
-          "speed": 12.827296486924183,
-          "direction": "bottom-right",
-          "random": false,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": false,
-            "rotateX": 600,
-            "rotateY": 1200
-          }
-        }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "repulse"
-          },
-          "onclick": {
-            "enable": false,
-            "mode": "push"
-          },
-          "resize": true
-        },
-        "modes": {
-          "grab": {
-            "distance": 400,
-            "line_linked": {
-              "opacity": 1
-            }
-          },
-          "bubble": {
-            "distance": 400,
-            "size": 40,
-            "duration": 2,
-            "opacity": 8,
-            "speed": 3
-          },
-          "repulse": {
-            "distance": 200,
-            "duration": 0.4
-          },
-          "push": {
-            "particles_nb": 4
-          },
-          "remove": {
-            "particles_nb": 2
-          }
-        }
-      },
-      "retina_detect": true
-    });
-  </script>
+  <h1>MultiProxy</h1>
+  <h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il) and access all proxies from a clean and simple UI! <br>
+  Made & Maintained by DataDecay (Samuel Wall)</h2>
+  <h3>later this wont look like absolute shit</h3>
+  <hr/>
+  <input id="site" placeholder="Site to visit">
+  <select name="presets" id="preset">
+    <option value="1">Tinf0il (fastest)</option>
+    <option value="6">DaydreamX (2nd fastest)</option>
+    <option value="4">Space Proxy (Moderate Speed)</option>
+    <option value="5">Utopia (Alright)</option>
+    <optgroup label="Incognito (slow)">
+      <option value="2">UV</option>
+      <option value="3">Scramjet</option>
+    </optgroup>
+    <option value="">Custom Site</option>
+  </select>
 
-    <h1>MultiProxy</h1>
-    <h2>Ignore those pesky ads on proxies (ahem, tinf0il) and use a clean UI!<br>By DataDecay</h2>
-    <h3>Later this won't look like absolute shit</h3>
-    <hr/>
-    <input id="site" placeholder="Site to visit">
-    <select name="presets" id="preset">
-      <option value="1">Tinf0il (fastest)</option>
-      <option value="6">DaydreamX (2nd fastest)</option>
-      <option value="4">Space Proxy (Moderate Speed)</option>
-      <option value="5">Utopia (Alright)</option>
-      <optgroup label="Incognito (slow)">
-        <option value="2">UV</option>
-        <option value="3">Scramjet</option>
-      </optgroup>
-      <option value="">Custom Site</option>
+  <div id="customInputs" style="display: none;">
+    <input id="host" placeholder="Proxy Service Url (e.g. https://no.datadecay.dev/uv/service/)">
+    <select name="codecs" id="codec">
+      <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
+      <option value="base64">base64 (none)</option>
+      <option value="incog">incognito custom codec</option>
+      <option value="plain">no encoding</option>
     </select>
+  </div>
 
-    <div id="customInputs" style="display: none;">
-      <input id="host" placeholder="Proxy Service Url (e.g. https://no.datadecay.dev/uv/service/)">
-      <select name="codecs" id="codec">
-        <option value="xor">XOR codec (ultraviolet & tinf0il)</option>
-        <option value="base64">base64 (none)</option>
-        <option value="incog">incognito custom codec</option>
-        <option value="plain">no encoding</option>
-      </select>
-    </div>
+  <button id="bypassbutton">Bypass!</button>
 
-    <button id="bypassbutton">Bypass!</button>
+  <script type="module">
+    import { xor, plain, base64, incog } from './codecs.js';
 
-    <script type="module">
-      import { xor, plain, base64, incog } from './codecs.js';
-  
-      const host = document.getElementById("host");
-      const site = document.getElementById("site");
-      const codecs = document.getElementById("codec");
-      const preset = document.getElementById("preset");
-      const customInputs = document.getElementById("customInputs");
-      host.value = "https://no.datadecay.dev/uv/service";
-  
-      preset.addEventListener("change", () => {
-        switch (preset.value) {
-          case "1":
-            host.value = "https://no.datadecay.dev/uv/service";
-            codecs.value = "xor";
-            customInputs.style.display = "none";
-            break;
-          case "2":
-            host.value = "https://datadecay.koyeb.app/~/uv";
-            codecs.value = "incog";
-            customInputs.style.display = "none";
-            break;
-          case "3":
-            host.value = "https://datadecay.koyeb.app/~/scramjet";
-            codecs.value = "plain";
-            customInputs.style.display = "none";
-            break;
-          case "4":
-            host.value = "https://orbitmc.lol/@/space";
-            codecs.value = "xor";
-            customInputs.style.display = "none";
-            break;
-          case "5":
-            host.value = "https://solve.guide.wedevforyou.com/math";
-            codecs.value = "xor";
-            customInputs.style.display = "none";
-            break;
-          case "6":
-            host.value = "https://hello.you.videomixargentina.com/@/daydream";
-            codecs.value = "xor";
-            customInputs.style.display = "none";
-            break;
-          default:
-            alert("Make sure you know what you are doing!");
-            host.value = "";
-            codecs.value = "plain";
-            customInputs.style.display = "block";
-        }
-      });
-      function toURL(input) {
-        try {
-          const url = new URL(input);
-          return url.href;
-        } catch {
-          if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
-            return 'https://' + input;
-          }
-          return 'https://www.google.com/search?q=' + encodeURIComponent(input);
-        }
+    const host = document.getElementById("host");
+    const site = document.getElementById("site");
+    const codecs = document.getElementById("codec");
+    const preset = document.getElementById("preset");
+    const customInputs = document.getElementById("customInputs");
+    host.value = "https://no.datadecay.dev/uv/service";
+
+    preset.addEventListener("change", () => {
+      switch (preset.value) {
+        case "1":
+          host.value = "https://no.datadecay.dev/uv/service";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        case "2":
+          host.value = "https://datadecay.koyeb.app/~/uv";
+          codecs.value = "incog";
+          customInputs.style.display = "none";
+          break;
+        case "3":
+          host.value = "https://datadecay.koyeb.app/~/scramjet";
+          codecs.value = "plain";
+          customInputs.style.display = "none";
+          break;
+        case "4":
+          host.value = "https://orbitmc.lol/@/space";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        case "5":
+          host.value = "https://solve.guide.wedevforyou.com/math";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        case "6":
+          host.value = "https://hello.you.videomixargentina.com/@/daydream";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        default:
+          alert("Make sure you know what you are doing!");
+          host.value = "";
+          codecs.value = "plain";
+          customInputs.style.display = "block";
       }
-  
-      function bypass() {
-        const codec = codecs.value;
-        let result;
-        let toencode;
-        toencode = toURL(site.value)
-        switch(codec) {
-          case "xor":
-            result = xor.encode(toencode);
-            break;
-          case "base64":
-            result = base64.encode(toencode);
-            break;
-          case "incog":
-            result = incog.encode(toencode);
-            break;
-          case "plain":
-            result = plain.encode(toencode);
-            break;
-          default:
-            alert("Unknown codec!");
-            return;
-        }
-  
-        if (!host.value || !result) {
-          alert("Missing host or site.");
+    });
+    function toURL(input) {
+  try {
+    const url = new URL(input);
+    return url.href;
+  } catch {
+    if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
+      return 'https://' + input;
+    }
+    return 'https://www.google.com/search?q=' + encodeURIComponent(input);
+  }
+}
+
+    function bypass() {
+      const codec = codecs.value;
+      let result;
+      let toencode;
+      toencode = toURL(site.value)
+      switch(codec) {
+        case "xor":
+          result = xor.encode(toencode);
+          break;
+        case "base64":
+          result = base64.encode(toencode);
+          break;
+        case "incog":
+          result = incog.encode(toencode);
+          break;
+        case "plain":
+          result = plain.encode(toencode);
+          break;
+        default:
+          alert("Unknown codec!");
           return;
-        }
-        window.open(`${host.value}/${result}`, '_blank');
       }
-  
-      document.getElementById("bypassbutton").addEventListener("click", bypass);
-    </script>
-    <h5>Check out my <a href="https://github.com/DataDecay">Github</a> or <a href="https://github.com/DataDecay-Projects">Projects</a>.</h5>
-    <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
+
+      if (!host.value || !result) {
+        alert("Missing host or site.");
+        return;
+      }
+      window.open(`${host.value}/${result}`, '_blank');
+    }
+
+    document.getElementById("bypassbutton").addEventListener("click", bypass);
+  </script>
+  <h5>Check out my <a href="https://github.com/DataDecay">Github</a>, or my <a href="https://github.com/DataDecay-Projects">Projects Github</a>.</h5>
+  <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
 </body>
 </html>
