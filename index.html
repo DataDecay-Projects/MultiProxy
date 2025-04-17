@@ -6,13 +6,13 @@
   <h1>Proxy Ad Bypass</h1>
   <h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il)</h2>
   <hr/>
+  <input id="site" placeholder="Site to visit">
   <select name="presets" id="preset">
     <option value="1">Tinf0il</option>
     <option value="2">Incognito</option>
     <option value="">Custom Site</option>
   </select>
-  
-  <input id="site" placeholder="Site to visit (e.g. https://google.com)">
+
   <div id="customInputs" style="display: none;">
     <input id="host" placeholder="Proxy Service Url (e.g. https://no.datadecay.dev/uv/service/)">
     <select name="codecs" id="codec">
@@ -81,7 +81,8 @@
         return;
       }
 
-      window.location.href = `${host.value}${result}`;
+      url = `${host.value}${result}`;
+      window.open(url, '_blank').focus();
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
