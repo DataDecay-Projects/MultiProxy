@@ -219,6 +219,8 @@ site.addEventListener("keypress", function(event) {
 var win = window.open()
 var url = `${host.value}/${result}`
 var body = win.document.createElement('body');
+var title = win.document.createElement('title');
+title.innerHTML = "MultiProxy by DataDecay"
 var iframe = win.document.body.createElement('iframe')
 iframe.style.width = "100%";
 iframe.style.height = "100%";
