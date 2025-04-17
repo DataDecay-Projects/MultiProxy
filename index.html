@@ -33,21 +33,22 @@
     const codecs = document.getElementById("codec");
     const preset = document.getElementById("preset");
     const customInputs = document.getElementById("customInputs");
-    host.value = "https://no.datadecay.dev/uv/service/";
+    host.value = "https://no.datadecay.dev/uv/service";
 
     preset.addEventListener("change", () => {
       switch (preset.value) {
         case "1":
-          host.value = "https://no.datadecay.dev/uv/service/";
+          host.value = "https://no.datadecay.dev/uv/service";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
         case "2":
-          host.value = "https://datadecay.koyeb.app/~/uv/";
+          host.value = "https://datadecay.koyeb.app/~/uv";
           codecs.value = "incog";
           customInputs.style.display = "none";
           break;
         default:
+          alert("Make sure you know what you are doing!")
           host.value = "";
           codecs.value = "plain";
           customInputs.style.display = "block";
@@ -80,9 +81,7 @@
         alert("Missing host or site.");
         return;
       }
-
-      url = `${host.value}${result}`;
-      window.open(url, '_blank').focus();
+      window.open(`${host.value}/${result}`, '_blank');
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
