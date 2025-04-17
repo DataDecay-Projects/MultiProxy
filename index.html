@@ -47,6 +47,7 @@
       font-family: monospace;
       font-size: 14px;
       padding: 10px;
+      box-sizing: border-box;
       width: 100%;
       margin-top: 10px;
       margin-bottom: 10px;
@@ -193,10 +194,16 @@ site.addEventListener("keypress", function(event) {
       let result;
       let toencode;
       toencode = toURL(site.value)
-      if (window[codec] && typeof window[codec].encode === "function") {
-  result = window[codec].encode(toencode);
-} else {
-  alert("Unknown codec! This is not your fault, but mine.");
+      try {
+  const codecObj = eval(codec);
+  if (codecObj && typeof codecObj.encode === "function") {
+    result = codecObj.encode(toencode);
+  } else {
+    alert("Server Error");
+    return;
+  }
+} catch (e) {
+  alert("Server Error");
   return;
 }
 
