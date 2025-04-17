@@ -1,6 +1,76 @@
 <!DOCTYPE html>
+<html>
 <head>
   <title>Proxy Ad Bypass</title>
+  <style>
+    body {
+      background: white;
+      color: black;
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      background: #0066cc;
+      color: white;
+      padding: 10px;
+      margin: 0;
+      font-size: 20px;
+      border: 2px solid black;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin: 10px 0;
+      background: #e1e1e1;
+      padding: 8px;
+      border: 2px solid black;
+      color: #333;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background: black;
+      margin: 20px 0;
+    }
+
+    input, select, button {
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 2px solid black;
+      border-radius: 0;
+      background: #f4f4f4;
+      color: black;
+    }
+
+    select {
+      background: #d0d0d0;
+    }
+
+    button {
+      background: #00cc00;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #009900;
+    }
+
+    #customInputs {
+      margin-top: 10px;
+      padding: 10px;
+      border: 2px dashed #888;
+      background: #fafafa;
+    }
+  </style>
 </head>
 <body>
   <h1>Proxy Ad Bypass</h1>
@@ -8,6 +78,8 @@
   <hr/>
   <input id="site" placeholder="Site to visit">
   <select name="presets" id="preset">
+    <option value="4">Space Proxy</option>
+    <option value="5">Utopia</option>
     <option value="1">Tinf0il</option>
     <option value="2">Incognito UV</option>
     <option value="3">Incognito Scramjet (better)</option>
@@ -53,8 +125,18 @@
           codecs.value = "plain";
           customInputs.style.display = "none";
           break;
+        case "4":
+          host.value = "https://orbitmc.lol/@/space";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
+        case "5":
+          host.value = "https://solve.guide.wedevforyou.com/math";
+          codecs.value = "xor";
+          customInputs.style.display = "none";
+          break;
         default:
-          alert("Make sure you know what you are doing!")
+          alert("Make sure you know what you are doing!");
           host.value = "";
           codecs.value = "plain";
           customInputs.style.display = "block";
@@ -93,3 +175,4 @@
     document.getElementById("bypassbutton").addEventListener("click", bypass);
   </script>
 </body>
+</html>
