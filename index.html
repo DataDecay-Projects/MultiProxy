@@ -214,6 +214,7 @@ site.addEventListener("keypress", function(event) {
         alert("Missing host or site.");
         return;
       }
+      /*
 var win = window.open()
 var url = "${host.value}/${result}"
 var iframe = win.document.createElement('iframe')
@@ -222,8 +223,8 @@ iframe.style.height = "100%";
 win.body.margin = 0;
 iframe.style.border = "none";
 iframe.src = url
-win.document.body.appendChild(iframe)
-      //window.open(`${host.value}/${result}`, '_blank');
+win.document.body.appendChild(iframe)*/
+      window.open(`${host.value}/${result}`, '_blank');
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
