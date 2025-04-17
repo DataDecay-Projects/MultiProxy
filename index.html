@@ -95,8 +95,9 @@
     <optgroup label="Incognito (slow)">
       <option value="2">Ultraviolet</option>
       <option value="3">Scramjet</option>
-      <option value="7">Shadow (sucks ass)</option>
+      
     </optgroup>
+    <option value="7">Shadow (sucks ass)</option>
     <option value="">Custom Site</option>
   </select>
 
@@ -163,7 +164,7 @@ site.addEventListener("keypress", function(event) {
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
-        case "6":
+        case "7":
           host.value = "https://key.vpn38.ru/uv/service";
           codecs.value = "xor";
           customInputs.style.display = "none";
@@ -224,7 +225,7 @@ win.body.style.margin = 0;
 iframe.style.border = "none";
 iframe.src = url
 win.document.body.appendChild(iframe)//*/
-      window.open(`${host.value}/${result}`, '_blank');
+      //window.open(`${host.value}/${result}`, '_blank');
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
