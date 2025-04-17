@@ -94,7 +94,7 @@
     <option value="4">Space Proxy (Moderate Speed)</option>
     <option value="5">Utopia (Alright)</option>
     <optgroup label="Incognito (slow)">
-      <option value="2">UV</option>
+      <option value="2">Ultraviolet</option>
       <option value="3">Scramjet</option>
     </optgroup>
     <option value="">Custom Site</option>
@@ -121,7 +121,16 @@
     const preset = document.getElementById("preset");
     const customInputs = document.getElementById("customInputs");
     host.value = "https://no.datadecay.dev/uv/service";
-
+    // Execute a function when the user presses a key on the keyboard
+site.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("bypassbutton").click();
+  }
+});
     preset.addEventListener("change", () => {
       switch (preset.value) {
         case "1":
