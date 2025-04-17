@@ -29,7 +29,7 @@
       color: #333;
     }
     h3 {
-      font-size: 7px;
+      font-size: 10px;
       margin: 10px 0;
       /*background: #e1e1e1;*/
       padding: 8px;
@@ -82,16 +82,19 @@
 <body>
   <h1>Proxy Ad Bypass</h1>
   <h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il)</h2>
+  <h2>Made & Maintained by DataDecay (Samuel Wall)</h2>
   <h3>later this wont look like absolute shit</h3>
   <hr/>
   <input id="site" placeholder="Site to visit">
   <select name="presets" id="preset">
-    <option value="4">Space Proxy</option>
-    <option value="5">Utopia</option>
-    <option value="1">Tinf0il</option>
-    <option value="2">Incognito UV</option>
-    <option value="3">Incognito Scramjet (better)</option>
-    <option value="6">DaydreamX</option>
+    <option value="1">Tinf0il (fastest)</option>
+    <option value="6">DaydreamX (2nd fastest)</option>
+    <option value="4">Space Proxy (Moderate Speed)</option>
+    <option value="5">Utopia (Alright)</option>
+    <optgroup label="Incognito (slow)">
+      <option value="2">UV</option>
+      <option value="3">Scramjet</option>
+    </optgroup>
     <option value="">Custom Site</option>
   </select>
 
@@ -200,5 +203,6 @@
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
   </script>
+  <h6>Check out my <a href="https://github.com/DataDecay">Github</a>, or my <a href="https://github.com/DataDecay-Projects">Projects Github</a>.</h6>
 </body>
 </html>
