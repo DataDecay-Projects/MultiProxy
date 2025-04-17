@@ -156,23 +156,35 @@
           customInputs.style.display = "block";
       }
     });
+    function toURL(input) {
+  try {
+    const url = new URL(input);
+    return url.href;
+  } catch {
+    if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
+      return 'https://' + input;
+    }
+    return 'https://www.google.com/search?q=' + encodeURIComponent(input);
+  }
+}
 
     function bypass() {
       const codec = codecs.value;
       let result;
-
+      let toencode;
+      toencode = toURL(site.value)
       switch(codec) {
         case "xor":
-          result = xor.encode(site.value);
+          result = xor.encode(toencode);
           break;
         case "base64":
-          result = base64.encode(site.value);
+          result = base64.encode(toencode);
           break;
         case "incog":
-          result = incog.encode(site.value);
+          result = incog.encode(toencode);
           break;
         case "plain":
-          result = plain.encode(site.value);
+          result = plain.encode(toencode);
           break;
         default:
           alert("Unknown codec!");
