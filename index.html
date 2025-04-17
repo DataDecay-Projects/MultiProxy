@@ -91,7 +91,9 @@
   </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
+  <div id="particles-js"></div>
+
+<script src="particles.js"></script>
   <main>
     <h1>MultiProxy</h1>
     <h2>Ignore those pesky ads on proxies (ahem, tinf0il) and use a clean UI!<br>By DataDecay</h2>
@@ -126,149 +128,8 @@
     <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
   </main>
 
-  <script type="module">
-    import { xor, plain, base64, incog } from './codecs.js';
-
-    const host = document.getElementById("host");
-    const site = document.getElementById("site");
-    const codecs = document.getElementById("codec");
-    const preset = document.getElementById("preset");
-    const customInputs = document.getElementById("customInputs");
-    host.value = "https://no.datadecay.dev/uv/service";
-
-    preset.addEventListener("change", () => {
-      switch (preset.value) {
-        case "1":
-          host.value = "https://no.datadecay.dev/uv/service";
-          codecs.value = "xor";
-          customInputs.style.display = "none";
-          break;
-        case "2":
-          host.value = "https://datadecay.koyeb.app/~/uv";
-          codecs.value = "incog";
-          customInputs.style.display = "none";
-          break;
-        case "3":
-          host.value = "https://datadecay.koyeb.app/~/scramjet";
-          codecs.value = "plain";
-          customInputs.style.display = "none";
-          break;
-        case "4":
-          host.value = "https://orbitmc.lol/@/space";
-          codecs.value = "xor";
-          customInputs.style.display = "none";
-          break;
-        case "5":
-          host.value = "https://solve.guide.wedevforyou.com/math";
-          codecs.value = "xor";
-          customInputs.style.display = "none";
-          break;
-        case "6":
-          host.value = "https://hello.you.videomixargentina.com/@/daydream";
-          codecs.value = "xor";
-          customInputs.style.display = "none";
-          break;
-        default:
-          alert("Make sure you know what you are doing!");
-          host.value = "";
-          codecs.value = "plain";
-          customInputs.style.display = "block";
-      }
-    });
-
-    function toURL(input) {
-      try {
-        const url = new URL(input);
-        return url.href;
-      } catch {
-        if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) {
-          return 'https://' + input;
-        }
-        return 'https://www.google.com/search?q=' + encodeURIComponent(input);
-      }
-    }
-
-    function bypass() {
-      const codec = codecs.value;
-      let result;
-      let toencode = toURL(site.value);
-      switch(codec) {
-        case "xor": result = xor.encode(toencode); break;
-        case "base64": result = base64.encode(toencode); break;
-        case "incog": result = incog.encode(toencode); break;
-        case "plain": result = plain.encode(toencode); break;
-        default:
-          alert("Unknown codec!"); return;
-      }
-      if (!host.value || !result) {
-        alert("Missing host or site."); return;
-      }
-      window.open(`${host.value}/${result}`, '_blank');
-    }
-
-    document.getElementById("bypassbutton").addEventListener("click", bypass);
-  </script>
-
-
-<canvas id="particles"></canvas>
-<script>
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  let nodes = [];
-
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-
-  for (let i = 0; i < 80; i++) {
-    nodes.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: Math.random() * 1.2 - 0.6,
-      vy: Math.random() * 1.2 - 0.6
-    });
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      a.x += a.vx;
-      a.y += a.vy;
-
-      if (a.x < 0 || a.x > width) a.vx *= -1;
-      if (a.y < 0 || a.y > height) a.vy *= -1;
-
-      ctx.beginPath();
-      ctx.arc(a.x, a.y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 0, 0, 0.9)';
-      ctx.shadowColor = '#ff0000';
-      ctx.shadowBlur = 10;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const dist = Math.hypot(a.x - b.x, a.y - b.y);
-        if (dist < 100) {
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = 'rgba(255, 0, 0, 0.08)';
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
-
+  <script src="
+https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js
+"></script>
 </body>
 </html>
