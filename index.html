@@ -9,7 +9,8 @@
   <input id="site" placeholder="Site to visit">
   <select name="presets" id="preset">
     <option value="1">Tinf0il</option>
-    <option value="2">Incognito</option>
+    <option value="2">Incognito UV</option>
+    <option value="3">Incognito Scramjet (better)</option>
     <option value="">Custom Site</option>
   </select>
 
@@ -45,6 +46,11 @@
         case "2":
           host.value = "https://datadecay.koyeb.app/~/uv";
           codecs.value = "incog";
+          customInputs.style.display = "none";
+          break;
+        case "3":
+          host.value = "https://datadecay.koyeb.app/~/scramjet";
+          codecs.value = "plain";
           customInputs.style.display = "none";
           break;
         default:
