@@ -215,7 +215,7 @@ site.addEventListener("keypress", function(event) {
         alert("Missing host or site.");
         return;
       }
-      ///*
+    /*
       var win = window.open();
 var url = `${host.value}/${result}`;
 
@@ -238,7 +238,8 @@ win.document.write(`
   </html>
 `);
 win.document.close();
-      //window.open(`${host.value}/${result}`, '_blank');
+*/
+      window.open(`${host.value}/${result}`, '_blank');
     }
 
     document.getElementById("bypassbutton").addEventListener("click", bypass);
