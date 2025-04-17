@@ -2,84 +2,7 @@
 <html>
 <head>
   <title>MultiProxy by DataDecay</title>
-  <style>
-    body {
-      background: white;
-      color: black;
-      font-family: monospace;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      /*background: #0066cc;*/
-      color: black;
-      padding: 10px;
-      margin: 0;
-      font-size: 20px;
-      /*border: 2px solid black;*/
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 10px 0;
-      /*background: #e1e1e1;*/
-      padding: 8px;
-      /*border: 2px solid black;*/
-      color: #333;
-    }
-    h3 {
-      font-size: 10px;
-      margin: 10px 0;
-      /*background: #e1e1e1;*/
-      padding: 8px;
-      /*border: 2px solid black;*/
-      color: #333;
-    }
-    hr {
-      border: none;
-      height: 2px;
-      background: black;
-      margin: 20px 0;
-    }
-
-    input, select, button {
-      font-family: monospace;
-      font-size: 14px;
-      padding: 10px;
-      box-sizing: border-box;
-      width: 100%;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      /*border: 2px solid black;*/
-      border-radius: 0;
-      background: #f4f4f4;
-      color: black;
-    }
-
-    select {
-      background: #d0d0d0;
-    }
-
-    button {
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      background: #00c100;
-    }
-
-    button:hover {
-      background: #009900;
-    }
-
-    #customInputs {
-      margin-top: 10px;
-      padding: 10px;
-      border: 2px dashed #888;
-      background: #fafafa;
-    }
-    
-  </style>
+  <link rel="stylesheet" src="styles.css.">
 </head>
 <body>
   <h1>MultiProxy</h1>
@@ -122,7 +45,7 @@
     const codecs = document.getElementById("codec");
     const preset = document.getElementById("preset");
     const customInputs = document.getElementById("customInputs");
-    host.value = "https://no.datadecay.dev/uv/service";
+    host.value = "https://no.datadecay.dev/uv/service/";
     // Execute a function when the user presses a key on the keyboard
 site.addEventListener("keypress", function(event) {
   // If the user presses the "Enter" key on the keyboard
@@ -136,37 +59,37 @@ site.addEventListener("keypress", function(event) {
     preset.addEventListener("change", () => {
       switch (preset.value) {
         case "1":
-          host.value = "https://no.datadecay.dev/uv/service";
+          host.value = "https://no.datadecay.dev/uv/service/";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
         case "2":
-          host.value = "https://datadecay.koyeb.app/~/uv";
+          host.value = "https://datadecay.koyeb.app/~/uv/";
           codecs.value = "incog";
           customInputs.style.display = "none";
           break;
         case "3":
-          host.value = "https://datadecay.koyeb.app/~/scramjet";
+          host.value = "https://datadecay.koyeb.app/~/scramjet/";
           codecs.value = "plain";
           customInputs.style.display = "none";
           break;
         case "4":
-          host.value = "https://orbitmc.lol/@/space";
+          host.value = "https://orbitmc.lol/@/space/";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
         case "5":
-          host.value = "https://solve.guide.wedevforyou.com/math";
+          host.value = "https://solve.guide.wedevforyou.com/math/";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
         case "6":
-          host.value = "https://hello.you.videomixargentina.com/@/daydream";
+          host.value = "https://hello.you.videomixargentina.com/@/daydream/";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
         case "7":
-          host.value = "https://key.vpn38.ru/uv/service";
+          host.value = "https://key.vpn38.ru/uv/service/";
           codecs.value = "xor";
           customInputs.style.display = "none";
           break;
