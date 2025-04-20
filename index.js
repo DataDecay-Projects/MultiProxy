@@ -1,19 +1,17 @@
+import { showNotification, COLORS } from './shared.js';
+
+// DOM Elements
 const site = document.getElementById("site");
+const quickTiles = document.getElementById('quickTiles');
+const addTileButton = document.getElementById('addTile');
+const tileEditor = document.getElementById('tileEditor');
+const tileText = document.getElementById('tileText');
+const tileUrl = document.getElementById('tileUrl');
+const saveTileButton = document.getElementById('saveTile');
+const cancelTileButton = document.getElementById('cancelTile');
+let selectedColor = COLORS.success;
 
-function showNotification(message, timeout = 3000, color = '#00c100') {
-  const notification = document.getElementById('notification');
-  if (!notification) {
-    console.error('Notification element not found');
-    return;
-  }
-  notification.textContent = message;
-  notification.style.background = color;
-  notification.style.display = 'block';
-  setTimeout(() => {
-    notification.style.display = 'none';
-  }, timeout);
-}
-
+// Check for selected proxy
 const selectedProxy = JSON.parse(sessionStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
   window.location.href = 'sites.html';
@@ -21,13 +19,7 @@ if (!selectedProxy) {
 
 document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
 
-site.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("bypassbutton").click();
-  }
-});
-
+// URL handling
 function toURL(input) {
   try {
     const url = new URL(input);
@@ -40,10 +32,10 @@ function toURL(input) {
   }
 }
 
+// Codec handling
 async function getCodec(name) {
   if (!name) {
-    console.error('No codec name provided');
-    showNotification('Error: No codec specified', 3000, '#ff4444');
+    showNotification({ message: 'Error: No codec specified', color: COLORS.error });
     return null;
   }
 
@@ -52,22 +44,20 @@ async function getCodec(name) {
     const codec = getCodec(name);
     
     if (!codec) {
-      console.error(`Codec '${name}' not found`);
-      showNotification(`Error: Invalid codec '${name}'`, 3000, '#ff4444');
+      showNotification({ message: `Error: Invalid codec '${name}'`, color: COLORS.error });
       return null;
     }
-
     return codec;
-  } catch (e) {
-    console.error('Error loading codec:', e);
-    showNotification('Error: Failed to load codec module', 3000, '#ff4444');
+  } catch {
+    showNotification({ message: 'Error: Failed to load codec module', color: COLORS.error });
     return null;
   }
 }
 
+// Bypass functionality
 async function bypass() {
   if (!selectedProxy) {
-    showNotification('Please select a proxy site first', 3000, '#ff9800');
+    showNotification({ message: 'Please select a proxy site first', color: COLORS.warning });
     window.location.href = 'sites.html';
     return;
   }
@@ -81,36 +71,24 @@ async function bypass() {
     if (codecObj && typeof codecObj.encode === "function") {
       result = codecObj.encode(toencode);
     } else {
-      showNotification('Server Error: Invalid codec', 3000, '#ff4444');
+      showNotification({ message: 'Server Error: Invalid codec', color: COLORS.error });
       return;
     }
-  } catch (e) {
-    console.error('Error during bypass:', e);
-    showNotification('Server Error: Failed to encode URL', 3000, '#ff4444');
+  } catch {
+    showNotification({ message: 'Server Error: Failed to encode URL', color: COLORS.error });
     return;
   }
 
   if (!selectedProxy.host || !result) {
-    showNotification('Please enter both host and site URL', 3000, '#ff9800');
+    showNotification({ message: 'Please enter both host and site URL', color: COLORS.warning });
     return;
   }
   
   window.open(`${selectedProxy.host}${result}`, '_blank');
-  showNotification('Bypass link opened in new tab', 3000, '#00c100');
+  showNotification({ message: 'Bypass link opened in new tab', color: COLORS.success });
 }
 
-document.getElementById("bypassbutton").addEventListener("click", () => bypass());
-
-// Quick access tile functionality
-const quickTiles = document.getElementById('quickTiles');
-const addTileButton = document.getElementById('addTile');
-const tileEditor = document.getElementById('tileEditor');
-const tileText = document.getElementById('tileText');
-const tileUrl = document.getElementById('tileUrl');
-const saveTileButton = document.getElementById('saveTile');
-const cancelTileButton = document.getElementById('cancelTile');
-let selectedColor = '#009900';
-
+// Quick Tiles Management
 function loadQuickTiles() {
   const tiles = JSON.parse(localStorage.getItem('quickTiles') || '[]');
   quickTiles.innerHTML = '';
@@ -127,7 +105,7 @@ function loadQuickTiles() {
     tileButton.addEventListener('click', () => {
       site.value = tile.url;
       bypass();
-      site.value = ``;
+      site.value = '';
     });
 
     const deleteButton = document.createElement('button');
@@ -135,10 +113,27 @@ function loadQuickTiles() {
     deleteButton.textContent = 'remove';
     deleteButton.addEventListener('click', (e) => {
       e.stopPropagation();
-      tiles.splice(index, 1);
-      localStorage.setItem('quickTiles', JSON.stringify(tiles));
-      loadQuickTiles();
-      showNotification('Quick access tile removed');
+      showNotification({
+        message: 'Are you sure you want to remove this tile?',
+        color: COLORS.warning,
+        isPrompt: true,
+        buttons: [
+          {
+            text: 'Yes',
+            color: COLORS.error,
+            action: () => {
+              tiles.splice(index, 1);
+              localStorage.setItem('quickTiles', JSON.stringify(tiles));
+              loadQuickTiles();
+              showNotification({ message: 'Quick access tile removed', color: COLORS.error });
+            }
+          },
+          {
+            text: 'No',
+            color: COLORS.cancel
+          }
+        ]
+      });
     });
 
     tileButton.appendChild(deleteButton);
@@ -146,16 +141,25 @@ function loadQuickTiles() {
   });
 }
 
-// Color picker functionality
+// Event Listeners
+site.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("bypassbutton").click();
+  }
+});
+
+document.getElementById("bypassbutton").addEventListener("click", bypass);
+
 document.querySelectorAll('.color-option').forEach(option => {
   option.addEventListener('click', () => {
     document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
     option.classList.add('selected');
     selectedColor = option.dataset.color;
+    showNotification({ message: 'Color selected', color: selectedColor });
   });
 });
 
-// Select default color
 document.querySelector('.color-option').classList.add('selected');
 
 addTileButton.addEventListener('click', () => {
@@ -163,7 +167,7 @@ addTileButton.addEventListener('click', () => {
   addTileButton.style.display = 'none';
   tileText.value = '';
   tileUrl.value = '';
-  selectedColor = '#009900';
+  selectedColor = COLORS.success;
   document.querySelectorAll('.color-option').forEach(opt => {
     opt.classList.toggle('selected', opt.dataset.color === selectedColor);
   });
@@ -179,7 +183,7 @@ saveTileButton.addEventListener('click', () => {
   const url = tileUrl.value.trim();
 
   if (!text || !url) {
-    showNotification('Please enter both display text and URL', 3000, '#ff9800');
+    showNotification({ message: 'Please enter both display text and URL', color: COLORS.warning });
     return;
   }
 
@@ -190,8 +194,7 @@ saveTileButton.addEventListener('click', () => {
   tileEditor.style.display = 'none';
   addTileButton.style.display = 'block';
   loadQuickTiles();
-  showNotification('Quick access tile added', 3000, '#00c100');
+  showNotification({ message: 'Quick access tile added', color: COLORS.success });
 });
 
-// Load tiles on page load
 loadQuickTiles();

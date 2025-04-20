@@ -1,25 +1,23 @@
+import { showNotification, COLORS } from './shared.js';
+
+// DOM Elements
 const host = document.getElementById("host");
 const codecs = document.getElementById("codec");
 const preset = document.getElementById("preset");
 const customInputs = document.getElementById("customInputs");
 const savedSitesGroup = document.getElementById("savedSites");
 
-function showNotification(message, timeout = 3000, color = '#00c100') {
-  const notification = document.getElementById('notification');
-  if (!notification) {
-    console.error('Notification element not found');
-    return;
-  }
-  notification.textContent = message;
-  notification.style.background = color;
-  notification.style.display = 'block';
-  setTimeout(() => {
-    notification.style.display = 'none';
-  }, timeout);
+// Storage helpers
+function getSavedSites() {
+  return JSON.parse(localStorage.getItem('savedSites') || '[]');
+}
+
+function saveSites(sites) {
+  localStorage.setItem('savedSites', JSON.stringify(sites));
 }
 
 function loadSavedSites() {
-  const saved = JSON.parse(localStorage.getItem('savedSites') || '[]');
+  const saved = getSavedSites();
   savedSitesGroup.innerHTML = '';
   saved.forEach((site, index) => {
     const option = document.createElement('option');
@@ -28,34 +26,69 @@ function loadSavedSites() {
     savedSitesGroup.appendChild(option);
   });
 
-  if (saved.length === 0) {
-    savedSitesGroup.style.display = 'none';
-  } else {
-    savedSitesGroup.style.display = 'block';
-  }
+  savedSitesGroup.style.display = saved.length === 0 ? 'none' : 'block';
 }
 
 function saveCustomSite() {
   const siteName = document.getElementById('siteName').value.trim();
   const hostValue = host.value.trim();
   if (!hostValue || !siteName) {
-    showNotification('Please fill in both site name and host URL', 3000, '#ff9800');
+    showNotification({
+      message: 'Please fill in both site name and host URL',
+      color: COLORS.warning
+    });
     return;
   }
 
-  const saved = JSON.parse(localStorage.getItem('savedSites') || '[]');
+  const saved = getSavedSites();
+  const existingSite = saved.find(site => site.name === siteName);
+  
+  if (existingSite) {
+    showNotification({
+      message: 'A site with this name already exists. Do you want to update it?',
+      color: COLORS.warning,
+      isPrompt: true,
+      buttons: [
+        {
+          text: 'Yes',
+          color: COLORS.success,
+          action: () => {
+            existingSite.host = hostValue;
+            existingSite.codec = codecs.value;
+            saveSites(saved);
+            loadSavedSites();
+            document.getElementById('siteName').value = '';
+            showNotification({
+              message: 'Custom site updated successfully',
+              color: COLORS.success
+            });
+          }
+        },
+        {
+          text: 'No',
+          color: COLORS.cancel
+        }
+      ]
+    });
+    return;
+  }
+
   saved.push({
     name: siteName,
     host: hostValue,
     codec: codecs.value
   });
 
-  localStorage.setItem('savedSites', JSON.stringify(saved));
+  saveSites(saved);
   loadSavedSites();
   document.getElementById('siteName').value = '';
-  showNotification('Custom site saved successfully', 3000, '#00c100');
+  showNotification({
+    message: 'Custom site saved successfully',
+    color: COLORS.success
+  });
 }
 
+// Event handlers
 document.getElementById('saveCustom').addEventListener('click', saveCustomSite);
 
 let presetData = [];
@@ -67,11 +100,10 @@ fetch('./presets.json?{{ site.github.build_revision }}')
   .catch(error => console.error('Error loading presets:', error));
 
 preset.addEventListener("change", () => {
-  const saved = JSON.parse(localStorage.getItem('savedSites') || '[]');
   const savedIndex = preset.value.match(/^saved_(\d+)$/);
 
   if (savedIndex) {
-    const site = saved[savedIndex[1]];
+    const site = getSavedSites()[savedIndex[1]];
     host.value = site.host;
     codecs.value = site.codec;
     customInputs.style.display = "none";
@@ -92,12 +124,18 @@ preset.addEventListener("change", () => {
 
 document.getElementById('selectSite').addEventListener('click', () => {
   if (preset.value === "" || (!preset.value && customInputs.style.display === 'none')) {
-    showNotification('Please select a proxy site first', 3000, '#ff9800');
+    showNotification({
+      message: 'Please select a proxy site first',
+      color: COLORS.warning
+    });
     return;
   }
   
   if (preset.value === 'custom' && (!host.value || host.value.trim() === '')) {
-    showNotification('Please enter a valid proxy URL', 3000, '#ff4444');
+    showNotification({
+      message: 'Please enter a valid proxy URL',
+      color: COLORS.error
+    });
     return;
   }
 
