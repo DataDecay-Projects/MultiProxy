@@ -1,18 +1,6 @@
-const site = document.getElementById("site");
+import { showNotification, COLORS } from './shared.js';
 
-function showNotification(message, timeout = 3000, color = '#00c100') {
-  const notification = document.getElementById('notification');
-  if (!notification) {
-    console.error('Notification element not found');
-    return;
-  }
-  notification.textContent = message;
-  notification.style.background = color;
-  notification.style.display = 'block';
-  setTimeout(() => {
-    notification.style.display = 'none';
-  }, timeout);
-}
+const site = document.getElementById("site");
 
 const selectedProxy = JSON.parse(sessionStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
@@ -43,7 +31,10 @@ function toURL(input) {
 async function getCodec(name) {
   if (!name) {
     console.error('No codec name provided');
-    showNotification('Error: No codec specified', 3000, '#ff4444');
+    showNotification({ 
+      message: 'Error: No codec specified', 
+      color: COLORS.error 
+    });
     return null;
   }
 
@@ -53,21 +44,30 @@ async function getCodec(name) {
     
     if (!codec) {
       console.error(`Codec '${name}' not found`);
-      showNotification(`Error: Invalid codec '${name}'`, 3000, '#ff4444');
+      showNotification({ 
+        message: `Error: Invalid codec '${name}'`, 
+        color: COLORS.error 
+      });
       return null;
     }
 
     return codec;
   } catch (e) {
     console.error('Error loading codec:', e);
-    showNotification('Error: Failed to load codec module', 3000, '#ff4444');
+    showNotification({ 
+      message: 'Error: Failed to load codec module', 
+      color: COLORS.error 
+    });
     return null;
   }
 }
 
 async function bypass() {
   if (!selectedProxy) {
-    showNotification('Please select a proxy site first', 3000, '#ff9800');
+    showNotification({ 
+      message: 'Please select a proxy site first', 
+      color: COLORS.warning 
+    });
     window.location.href = 'sites.html';
     return;
   }
@@ -81,22 +81,34 @@ async function bypass() {
     if (codecObj && typeof codecObj.encode === "function") {
       result = codecObj.encode(toencode);
     } else {
-      showNotification('Server Error: Invalid codec', 3000, '#ff4444');
+      showNotification({ 
+        message: 'Server Error: Invalid codec', 
+        color: COLORS.error 
+      });
       return;
     }
   } catch (e) {
     console.error('Error during bypass:', e);
-    showNotification('Server Error: Failed to encode URL', 3000, '#ff4444');
+    showNotification({ 
+      message: 'Server Error: Failed to encode URL', 
+      color: COLORS.error 
+    });
     return;
   }
 
   if (!selectedProxy.host || !result) {
-    showNotification('Please enter both host and site URL', 3000, '#ff9800');
+    showNotification({ 
+      message: 'Please enter both host and site URL', 
+      color: COLORS.warning 
+    });
     return;
   }
   
   window.open(`${selectedProxy.host}${result}`, '_blank');
-  showNotification('Bypass link opened in new tab', 3000, '#00c100');
+  showNotification({ 
+    message: 'Bypass link opened in new tab', 
+    color: COLORS.success 
+  });
 }
 
 document.getElementById("bypassbutton").addEventListener("click", () => bypass());
@@ -127,7 +139,7 @@ function loadQuickTiles() {
     tileButton.addEventListener('click', () => {
       site.value = tile.url;
       bypass();
-      site.value = ``;
+      site.value = '';
     });
 
     const deleteButton = document.createElement('button');
@@ -135,10 +147,30 @@ function loadQuickTiles() {
     deleteButton.textContent = 'remove';
     deleteButton.addEventListener('click', (e) => {
       e.stopPropagation();
-      tiles.splice(index, 1);
-      localStorage.setItem('quickTiles', JSON.stringify(tiles));
-      loadQuickTiles();
-      showNotification('Quick access tile removed');
+      showNotification({
+        message: `Are you sure you want to delete the "${tile.text}" tile?`,
+        color: COLORS.warning,
+        isPrompt: true,
+        buttons: [
+          {
+            text: 'Yes',
+            color: COLORS.error,
+            action: () => {
+              tiles.splice(index, 1);
+              localStorage.setItem('quickTiles', JSON.stringify(tiles));
+              loadQuickTiles();
+              showNotification({ 
+                message: 'Quick access tile removed',
+                color: COLORS.error
+              });
+            }
+          },
+          {
+            text: 'No',
+            color: COLORS.cancel
+          }
+        ]
+      });
     });
 
     tileButton.appendChild(deleteButton);
@@ -179,7 +211,10 @@ saveTileButton.addEventListener('click', () => {
   const url = tileUrl.value.trim();
 
   if (!text || !url) {
-    showNotification('Please enter both display text and URL', 3000, '#ff9800');
+    showNotification({
+      message: 'Please enter both display text and URL',
+      color: COLORS.warning
+    });
     return;
   }
 
@@ -190,7 +225,10 @@ saveTileButton.addEventListener('click', () => {
   tileEditor.style.display = 'none';
   addTileButton.style.display = 'block';
   loadQuickTiles();
-  showNotification('Quick access tile added', 3000, '#00c100');
+  showNotification({
+    message: 'Quick access tile added',
+    color: COLORS.success
+  });
 });
 
 // Load tiles on page load
