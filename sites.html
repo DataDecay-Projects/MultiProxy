@@ -1,0 +1,39 @@
+---
+layout: default
+title: Select Proxy Site
+subtitle: Choose your preferred proxy service
+---
+
+<div id="notification"></div>
+
+<select name="presets" id="preset">
+  <option value="" disabled selected>-- Choose a proxy site --</option>
+  <optgroup label="Presets">
+    <option value="1">Tinf0il (fastest)</option>
+    <option value="6">{broken} DaydreamX (2nd fastest)</option>
+    <option value="4">{broken} Space Proxy (Moderate Speed)</option>
+    <option value="5">Utopia (Alright)</option>
+  </optgroup>
+  <optgroup label="Incognito (slow)">
+    <option value="2">Ultraviolet</option>
+    <option value="3">Scramjet</option>
+  </optgroup>
+  <option value="custom">Custom Site</option>
+  <optgroup label="Saved" id="savedSites"></optgroup>
+</select>
+
+<div id="customInputs" style="display: none;">
+  <input id="host" placeholder="Proxy Service Url">
+  <input id="siteName" placeholder="Name for custom site">
+  <select name="codecs" id="codec">
+    <option value="xor">XOR codec (ultraviolet)</option>
+    <option value="base64">base64 codec (none)</option>
+    <option value="incog">incognito custom codec</option>
+    <option value="plain">only URL encoding (scramjet)</option>
+  </select>
+  <button id="saveCustom">Save Custom Site</button>
+</div>
+
+<button id="selectSite">Use Selected Site</button>
+
+<script type="module" src="{{ '/sites.js?v=' | append: site.github.build_revision | relative_url }}"></script>

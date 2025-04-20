@@ -1,48 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>MultiProxy</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-</head>
-<body>
-  <h1>MultiProxy</h1>
-  <h2>Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il) and access all proxies from a clean and simple UI! <br>
-  Made & Maintained by DataDecay (Samuel Wall)<br>
-  You may have to press "register service worker" on proxies running Ultraviolet (tinf0il and others)</h2>
-  <h2 style="background-color: red; color: yellow;">Some links are currently broken, I have no clue why lol</h2>
-  <hr/>
-  <input id="site" placeholder="Site to visit">
-  <select name="presets" id="preset">
-    <option value="1">Tinf0il (fastest)</option>
-    <option value="6">{broken} DaydreamX (2nd fastest)</option>
-    <option value="4">{broken} Space Proxy (Moderate Speed)</option>
-    <option value="5">Utopia (Alright)</option>
-    <optgroup label="Incognito (slow)">
-      <option value="2">Ultraviolet</option>
-      <option value="3">Scramjet</option>
-      
-    </optgroup>
-    <option value="7">{broken} Shadow (sucks ass)</option>
-    <option value="">Custom Site</option>
-  </select>
+---
+layout: default
+title: MultiProxy
+subtitle: Ignore those pesky ads that are on pretty much all proxies, (ahem, tinf0il) and access all proxies from a clean and simple UI!
+---
 
-  <div id="customInputs" style="display: none;">
-    <input id="host" placeholder="Proxy Service Url (e.g. https://no.datadecay.dev/uv/service/)">
-    <select name="codecs" id="codec">
-      <option value="xor">XOR codec (ultraviolet)</option>
-      <option value="base64">base64 codec (none)</option>
-      <option value="incog">incognito custom codec</option>
-      <option value="plain">only URL encoding (scramjet)</option>
-    </select>
+<div id="notification"></div>
+<div id="selectedSite"></div>
+<input id="site" placeholder="Site to visit">
+<button id="bypassbutton">Bypass!</button>
+<button onclick="window.location.href='sites.html'">Change Proxy Site</button>
+
+<div id="quickAccessSection" style="margin: 0px;">
+  <button id="addTile">Add Quick Access Tile</button>
+  <div id="quickTiles"></div>
+  <div id="tileEditor" style="display: none;">
+    <input id="tileText" placeholder="Display Text (1-2 chars recommended)" maxlength="5">
+    <input id="tileUrl" placeholder="URL">
+    <div class="color-picker">
+      <div class="color-option" style="background: #009900" data-color="#009900"></div>
+      <div class="color-option" style="background: #990000" data-color="#990000"></div>
+      <div class="color-option" style="background: #000099" data-color="#000099"></div>
+      <div class="color-option" style="background: #990099" data-color="#990099"></div>
+      <div class="color-option" style="background: #999900" data-color="#999900"></div>
+      <div class="color-option" style="background: #999999" data-color="#999999"></div>
+      <div class="color-option" style="background: #009999" data-color="#009999"></div>
+    </div>
+    <button id="saveTile">Save Tile</button>
+    <button id="cancelTile">Cancel</button>
   </div>
+</div>
 
-  <button id="bypassbutton">Bypass!</button>
-
-  <script type="module" src="index.js">
-  </script>
-  <h5>Check out my <a href="https://github.com/DataDecay">Github</a>, or my <a href="https://github.com/DataDecay-Projects">Projects Github</a>.</h5>
-  <h5>Made for <a href="https://sites.google.com/students.wcpss.net/the-bubble-is-goated/">The Bubble</a></h5>
-
-</body>
-</html>
+<script type="module" src="{{ '/index.js?v=' | append: site.github.build_revision | relative_url }}"></script>

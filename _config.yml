@@ -1,0 +1,15 @@
+title: MultiProxy
+description: Access proxies from a clean and simple UI
+author: DataDecay
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+exclude: [README.md, netlify.toml, vercel.json]
+
+# Theme settings
+show_downloads: false
+github:
+  is_project_page: true
+  repository_url: "https://github.com/DataDecay/proxy-encode-bypass"
