@@ -1,13 +1,13 @@
 import { showNotification, COLORS } from './shared.js';
 
-// DOM Elements
+
 const host = document.getElementById("host");
 const codecs = document.getElementById("codec");
 const preset = document.getElementById("preset");
 const customInputs = document.getElementById("customInputs");
 const savedSitesGroup = document.getElementById("savedSites");
 
-// Storage helpers
+
 function getSavedSites() {
   return JSON.parse(localStorage.getItem('savedSites') || '[]');
 }
@@ -45,7 +45,7 @@ function saveCustomSite() {
   
   if (existingSite) {
     showNotification({
-      message: 'A site with this name already exists. Do you want to update it?',
+      message: `A site with name "${siteName}" already exists. Do you want to update it?`,
       color: COLORS.warning,
       isPrompt: true,
       buttons: [

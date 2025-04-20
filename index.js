@@ -35,7 +35,13 @@ function toURL(input) {
 // Codec handling
 async function getCodec(name) {
   if (!name) {
-    showNotification({ message: 'Error: No codec specified', color: COLORS.error });
+
+    console.error('No codec name provided');
+    showNotification({ 
+      message: 'Error: No codec specified', 
+      color: COLORS.error 
+    });
+
     return null;
   }
 
@@ -44,12 +50,20 @@ async function getCodec(name) {
     const codec = getCodec(name);
     
     if (!codec) {
-      showNotification({ message: `Error: Invalid codec '${name}'`, color: COLORS.error });
+      console.error(`Codec '${name}' not found`);
+      showNotification({ 
+        message: `Error: Invalid codec '${name}'`, 
+        color: COLORS.error 
+      });
       return null;
     }
     return codec;
-  } catch {
-    showNotification({ message: 'Error: Failed to load codec module', color: COLORS.error });
+  } catch (e) {
+    console.error('Error loading codec:', e);
+    showNotification({ 
+      message: 'Error: Failed to load codec module', 
+      color: COLORS.error 
+    });
     return null;
   }
 }
@@ -57,7 +71,10 @@ async function getCodec(name) {
 // Bypass functionality
 async function bypass() {
   if (!selectedProxy) {
-    showNotification({ message: 'Please select a proxy site first', color: COLORS.warning });
+    showNotification({ 
+      message: 'Please select a proxy site first', 
+      color: COLORS.warning 
+    });
     window.location.href = 'sites.html';
     return;
   }
@@ -71,21 +88,35 @@ async function bypass() {
     if (codecObj && typeof codecObj.encode === "function") {
       result = codecObj.encode(toencode);
     } else {
-      showNotification({ message: 'Server Error: Invalid codec', color: COLORS.error });
+      showNotification({ 
+        message: 'Server Error: Invalid codec', 
+        color: COLORS.error 
+      });
       return;
     }
-  } catch {
-    showNotification({ message: 'Server Error: Failed to encode URL', color: COLORS.error });
+  } catch (e) {
+    console.error('Error during bypass:', e);
+    showNotification({ 
+      message: 'Server Error: Failed to encode URL', 
+      color: COLORS.error 
+    });
+
     return;
   }
 
   if (!selectedProxy.host || !result) {
-    showNotification({ message: 'Please enter both host and site URL', color: COLORS.warning });
+    showNotification({ 
+      message: 'Please enter both host and site URL', 
+      color: COLORS.warning 
+    });
     return;
   }
   
   window.open(`${selectedProxy.host}${result}`, '_blank');
-  showNotification({ message: 'Bypass link opened in new tab', color: COLORS.success });
+  showNotification({ 
+    message: 'Bypass link opened in new tab', 
+    color: COLORS.success 
+  });
 }
 
 // Quick Tiles Management
@@ -114,7 +145,7 @@ function loadQuickTiles() {
     deleteButton.addEventListener('click', (e) => {
       e.stopPropagation();
       showNotification({
-        message: 'Are you sure you want to remove this tile?',
+        message: `Are you sure you want to delete the "${tile.text}" tile?`,
         color: COLORS.warning,
         isPrompt: true,
         buttons: [
@@ -125,7 +156,10 @@ function loadQuickTiles() {
               tiles.splice(index, 1);
               localStorage.setItem('quickTiles', JSON.stringify(tiles));
               loadQuickTiles();
-              showNotification({ message: 'Quick access tile removed', color: COLORS.error });
+              showNotification({ 
+                message: 'Quick access tile removed',
+                color: COLORS.error
+              });
             }
           },
           {
@@ -183,7 +217,10 @@ saveTileButton.addEventListener('click', () => {
   const url = tileUrl.value.trim();
 
   if (!text || !url) {
-    showNotification({ message: 'Please enter both display text and URL', color: COLORS.warning });
+    showNotification({
+      message: 'Please enter both display text and URL',
+      color: COLORS.warning
+    });
     return;
   }
 
@@ -194,7 +231,10 @@ saveTileButton.addEventListener('click', () => {
   tileEditor.style.display = 'none';
   addTileButton.style.display = 'block';
   loadQuickTiles();
-  showNotification({ message: 'Quick access tile added', color: COLORS.success });
+  showNotification({
+    message: 'Quick access tile added',
+    color: COLORS.success
+  });
 });
 
 loadQuickTiles();

@@ -89,6 +89,10 @@ button:hover {
   z-index: 1000;
   min-width: 300px;
   max-width: 80%;
+  color: var(--ui-text-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
 }
 
 .notification-message {
@@ -110,6 +114,12 @@ button:hover {
   min-width: 80px;
   margin: 0 !important;
   padding: 5px 15px !important;
+  border: 2px solid;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.notification-button:hover {
+  opacity: 0.9;
 }
 
 #quickAccessSection {
@@ -138,6 +148,12 @@ button:hover {
   font-family: monospace;
   width: 100%;
   position: relative;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.quick-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .quick-tile-text {
@@ -145,6 +161,7 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .delete-tile {
@@ -162,15 +179,18 @@ button:hover {
   left: 0;
   display: none;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(2px);
 }
 
 .quick-tile:hover .delete-tile {
   display: block;
   opacity: 1;
 }
+
 .delete-tile:hover {
-  background-color: #0000002a;
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #cc0000;
 }
 
 #tileEditor {
