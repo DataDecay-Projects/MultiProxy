@@ -1,0 +1,46 @@
+{
+  "presets": [
+    {
+      "id": "1",
+      "name": "Tinf0il (fastest)",
+      "host": "https://no.datadecay.dev/uv/service/",
+      "codec": "xor"
+    },
+    {
+      "id": "2", 
+      "name": "Ultraviolet",
+      "host": "https://datadecay.koyeb.app/~/uv/",
+      "codec": "incog"
+    },
+    {
+      "id": "3",
+      "name": "Scramjet",
+      "host": "https://datadecay.koyeb.app/~/scramjet/",
+      "codec": "plain"
+    },
+    {
+      "id": "4",
+      "name": "{broken} Space Proxy (Moderate Speed)",
+      "host": "https://orbitmc.lol/@/space/",
+      "codec": "xor"
+    },
+    {
+      "id": "5",
+      "name": "Utopia (Alright)",
+      "host": "https://solve.guide.wedevforyou.com/math/",
+      "codec": "xor"
+    },
+    {
+      "id": "6", 
+      "name": "{broken} DaydreamX (2nd fastest)",
+      "host": "https://hello.you.videomixargentina.com/@/daydream/",
+      "codec": "xor"
+    },
+    {
+      "id": "7",
+      "name": "{broken} Shadow (sucks ass)",
+      "host": "https://key.vpn38.ru/uv/service/",
+      "codec": "xor" 
+    }
+  ]
+}
