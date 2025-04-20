@@ -1,10 +1,12 @@
 import { showNotification, COLORS } from './shared.js';
 
+
 const host = document.getElementById("host");
 const codecs = document.getElementById("codec");
 const preset = document.getElementById("preset");
 const customInputs = document.getElementById("customInputs");
 const savedSitesGroup = document.getElementById("savedSites");
+
 
 function getSavedSites() {
   return JSON.parse(localStorage.getItem('savedSites') || '[]');

@@ -2,7 +2,7 @@
 export const DEFAULT_UI_COLOR = '#00c100';
 export const COLORS = {
   success: '#00c100',
-  warning: '#FABE00', // Using the hex color you provided
+  warning: '#ff9800',
   error: '#ff4444',
   cancel: '#666666'
 };

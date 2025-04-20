@@ -1,7 +1,17 @@
 import { showNotification, COLORS } from './shared.js';
 
+// DOM Elements
 const site = document.getElementById("site");
+const quickTiles = document.getElementById('quickTiles');
+const addTileButton = document.getElementById('addTile');
+const tileEditor = document.getElementById('tileEditor');
+const tileText = document.getElementById('tileText');
+const tileUrl = document.getElementById('tileUrl');
+const saveTileButton = document.getElementById('saveTile');
+const cancelTileButton = document.getElementById('cancelTile');
+let selectedColor = COLORS.success;
 
+// Check for selected proxy
 const selectedProxy = JSON.parse(sessionStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
   window.location.href = 'sites.html';
@@ -9,13 +19,7 @@ if (!selectedProxy) {
 
 document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
 
-site.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("bypassbutton").click();
-  }
-});
-
+// URL handling
 function toURL(input) {
   try {
     const url = new URL(input);
@@ -28,13 +32,16 @@ function toURL(input) {
   }
 }
 
+// Codec handling
 async function getCodec(name) {
   if (!name) {
+
     console.error('No codec name provided');
     showNotification({ 
       message: 'Error: No codec specified', 
       color: COLORS.error 
     });
+
     return null;
   }
 
@@ -50,7 +57,6 @@ async function getCodec(name) {
       });
       return null;
     }
-
     return codec;
   } catch (e) {
     console.error('Error loading codec:', e);
@@ -62,6 +68,7 @@ async function getCodec(name) {
   }
 }
 
+// Bypass functionality
 async function bypass() {
   if (!selectedProxy) {
     showNotification({ 
@@ -93,6 +100,7 @@ async function bypass() {
       message: 'Server Error: Failed to encode URL', 
       color: COLORS.error 
     });
+
     return;
   }
 
@@ -111,18 +119,7 @@ async function bypass() {
   });
 }
 
-document.getElementById("bypassbutton").addEventListener("click", () => bypass());
-
-// Quick access tile functionality
-const quickTiles = document.getElementById('quickTiles');
-const addTileButton = document.getElementById('addTile');
-const tileEditor = document.getElementById('tileEditor');
-const tileText = document.getElementById('tileText');
-const tileUrl = document.getElementById('tileUrl');
-const saveTileButton = document.getElementById('saveTile');
-const cancelTileButton = document.getElementById('cancelTile');
-let selectedColor = '#009900';
-
+// Quick Tiles Management
 function loadQuickTiles() {
   const tiles = JSON.parse(localStorage.getItem('quickTiles') || '[]');
   quickTiles.innerHTML = '';
@@ -178,16 +175,25 @@ function loadQuickTiles() {
   });
 }
 
-// Color picker functionality
+// Event Listeners
+site.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("bypassbutton").click();
+  }
+});
+
+document.getElementById("bypassbutton").addEventListener("click", bypass);
+
 document.querySelectorAll('.color-option').forEach(option => {
   option.addEventListener('click', () => {
     document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
     option.classList.add('selected');
     selectedColor = option.dataset.color;
+    showNotification({ message: 'Color selected', color: selectedColor });
   });
 });
 
-// Select default color
 document.querySelector('.color-option').classList.add('selected');
 
 addTileButton.addEventListener('click', () => {
@@ -195,7 +201,7 @@ addTileButton.addEventListener('click', () => {
   addTileButton.style.display = 'none';
   tileText.value = '';
   tileUrl.value = '';
-  selectedColor = '#009900';
+  selectedColor = COLORS.success;
   document.querySelectorAll('.color-option').forEach(opt => {
     opt.classList.toggle('selected', opt.dataset.color === selectedColor);
   });
@@ -231,5 +237,4 @@ saveTileButton.addEventListener('click', () => {
   });
 });
 
-// Load tiles on page load
 loadQuickTiles();

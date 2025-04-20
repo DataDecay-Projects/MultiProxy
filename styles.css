@@ -1,3 +1,8 @@
+:root {
+  --ui-color: #00c100;
+  --ui-text-color: #ffffff;
+}
+
 body {
   background: white;
   color: black;
@@ -52,14 +57,14 @@ select {
 }
 
 button {
-  color: white;
+  color: var(--ui-text-color);
   font-weight: bold;
   cursor: pointer;
-  background: #00c100;
+  background: var(--ui-color);
 }
 
 button:hover {
-  background: #009900;
+  background: color-mix(in srgb, var(--ui-color) 80%, black);
 }
 
 #customInputs {
@@ -88,6 +93,14 @@ button:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
 }
+}
+
+.notification-message {
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+
 
 .notification-buttons {
   display: flex;
@@ -222,4 +235,84 @@ select option:disabled {
 a {
   color: black;
   text-decoration: underline;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  width: auto;
+  margin: 0;
+}
+
+.settings-button:hover {
+  background: #f4f4f4;
+  border-radius: 50%;
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.settings-section {
+  margin: 20px 0;
+  padding: 15px;
+  border: 2px solid #ccc;
+}
+
+.settings-section h3 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.setting-item {
+  margin: 15px 0;
+}
+
+.color-setting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.small-button {
+  width: auto;
+  padding: 5px 10px;
+  margin: 0;
+}
+
+.setting-item label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.setting-item input[type="color"] {
+  width: 60px;
+  height: 30px;
+  padding: 0;
+  border: 2px solid black;
+}
+
+.danger-button {
+  background: #ff4444;
+  color: white;
+}
+
+.danger-button:hover {
+  background: #cc3333;
 }
