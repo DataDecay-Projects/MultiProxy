@@ -307,6 +307,26 @@ a {
   border: 2px solid black;
 }
 
+.text-setting input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 2px solid #ccc;
+  font-family: monospace;
+}
+
+.text-setting input[type="text"]:focus {
+  border-color: var(--ui-color);
+  outline: none;
+}
+
+.setting-description {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
 .danger-button {
   background: #ff4444;
   color: white;

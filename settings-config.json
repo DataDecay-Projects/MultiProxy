@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "title": "Display Settings",
+      "settings": [
+        {
+          "id": "uiColor",
+          "type": "color",
+          "label": "UI Color",
+          "defaultValue": "#00c100",
+          "hasReset": true
+        }
+      ]
+    },
+    {
+      "title": "Data Management",
+      "settings": [
+        {
+          "id": "clearQuickTiles",
+          "type": "action",
+          "label": "Clear All Quick Access Tiles",
+          "style": "danger",
+          "confirmMessage": "Are you sure you want to clear all quick access tiles?",
+          "settingsKey": "quickTiles"
+        },
+        {
+          "id": "clearSavedSites",
+          "type": "action",
+          "label": "Clear All Saved Proxy Sites",
+          "style": "danger",
+          "confirmMessage": "Are you sure you want to clear all saved proxy sites?",
+          "settingsKey": "savedSites"
+        }
+      ]
+    }
+  ]
+}
