@@ -10,7 +10,6 @@ const tileUrl = document.getElementById('tileUrl');
 const saveTileButton = document.getElementById('saveTile');
 const cancelTileButton = document.getElementById('cancelTile');
 let selectedColor = COLORS.success;
-try {
 // Check for selected proxy
 const selectedProxy = JSON.parse(localStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
@@ -237,7 +236,3 @@ saveTileButton.addEventListener('click', () => {
 });
 
 loadQuickTiles();
-}catch (e) {
-  console.error('Error in main script:', e);
-  alert(e);
-}
