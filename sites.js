@@ -1,5 +1,4 @@
-import { showNotification, COLORS } from './shared.js';
-
+import { showNotification, COLORS, getSettings, updateSettings } from './shared.js';
 
 const host = document.getElementById("host");
 const codecs = document.getElementById("codec");
@@ -7,13 +6,12 @@ const preset = document.getElementById("preset");
 const customInputs = document.getElementById("customInputs");
 const savedSitesGroup = document.getElementById("savedSites");
 
-
 function getSavedSites() {
-  return JSON.parse(localStorage.getItem('savedSites') || '[]');
+  return getSettings().savedSites;
 }
 
 function saveSites(sites) {
-  localStorage.setItem('savedSites', JSON.stringify(sites));
+  updateSettings({ savedSites: sites });
 }
 
 function loadSavedSites() {
@@ -145,7 +143,7 @@ document.getElementById('selectSite').addEventListener('click', () => {
     name: preset.selectedOptions[0].text
   };
   
-  sessionStorage.setItem('selectedProxy', JSON.stringify(selectedSite));
+  localStorage.setItem('selectedProxy', JSON.stringify(selectedSite));
   window.location.href = 'index.html';
 });
 
