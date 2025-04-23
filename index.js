@@ -1,5 +1,4 @@
-
-  import { showNotification, COLORS, getSettings, updateSettings } from './shared.js';
+import { showNotification, COLORS, getSettings, updateSettings } from './shared.js';
 
 // DOM Elements
 const site = document.getElementById("site");
@@ -11,15 +10,16 @@ const tileUrl = document.getElementById('tileUrl');
 const saveTileButton = document.getElementById('saveTile');
 const cancelTileButton = document.getElementById('cancelTile');
 let selectedColor = COLORS.success;
-try{
+try {
 // Check for selected proxy
-const selectedProxy = JSON.parse(sessionStorage.getItem('selectedProxy'));
+const selectedProxy = JSON.parse(localStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
   window.location.href = 'sites.html';
+  console.warn('No proxy site selected');
 }
-
-document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
-
+if (selectedProxy) {
+  document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
+}
 // URL handling
 function toURL(input) {
   try {

@@ -83,7 +83,8 @@ async function checkAnnouncements(bypass = false) {
     const announcements = JSON.parse(announcementFile.content);
     if (!Array.isArray(announcements)) return null;
 
-    // Find first valid announcement that hasn't been seen
+    // Find all valid announcements
+    const validAnnouncements = [];
     for (const announcement of announcements) {
       if (!announcement.message) continue;
 
@@ -92,57 +93,84 @@ async function checkAnnouncements(bypass = false) {
       const now = Date.now();
 
       if (now >= startTime && now <= endTime) {
-        // Generate hash of the message content
-        const messageHash = hashMessage(announcement.message);
-        
-        // Check if this exact message hash has been seen
-        if (!Array.isArray(settings.lastSeenAnnouncement)) {
-          settings.lastSeenAnnouncement = []; // Reset if not array
-        }
-        
-        if (settings.lastSeenAnnouncement.includes(messageHash)) {
-          continue;
+        // Skip cache check for uncached announcements
+        if (!announcement.uncached) {
+          const messageHash = hashMessage(announcement.message);
+          
+          if (!Array.isArray(settings.lastSeenAnnouncement)) {
+            settings.lastSeenAnnouncement = [];
+          }
+          
+          if (settings.lastSeenAnnouncement.includes(messageHash)) {
+            continue;
+          }
+
+          // Add the new hash to the array of seen announcements
+          settings.lastSeenAnnouncement.push(messageHash);
+          updateSettings({ lastSeenAnnouncement: settings.lastSeenAnnouncement });
         }
 
-        // Add the new hash to the array of seen announcements
-        settings.lastSeenAnnouncement.push(messageHash);
-        updateSettings({ lastSeenAnnouncement: settings.lastSeenAnnouncement });
-
-        return announcement;
+        validAnnouncements.push(announcement);
       }
     }
+
+    return validAnnouncements;
   } catch (error) {
     console.error('Error checking announcements:', error);
     return null;
   }
-  return null;
 }
 
 function startAnnouncementChecks() {
-  // Clear any existing interval
   if (announcementCheckInterval) {
     clearInterval(announcementCheckInterval);
   }
 
   // Check immediately
-  checkAnnouncements().then(announcement => {
-    if (announcement) {
-      showNotification({
-        message: announcement.message,
-        color: announcement.color || COLORS.success,
-        timeout: announcement.timeout || 5000
+  checkAnnouncements().then(announcements => {
+    if (announcements && announcements.length > 0) {
+      announcements.forEach(announcement => {
+        const notificationOptions = {
+          message: announcement.message,
+          color: announcement.color || COLORS.success,
+          timeout: announcement.timeout || 5000,
+          isPrompt: announcement.buttons?.length > 0
+        };
+
+        if (announcement.buttons) {
+          notificationOptions.buttons = announcement.buttons.map(btn => ({
+            text: btn.text,
+            color: btn.color,
+            action: typeof btn.action === 'string' ? new Function(btn.action) : undefined
+          }));
+        }
+
+        showNotification(notificationOptions);
       });
     }
   });
 
   // Set up periodic checks
   announcementCheckInterval = setInterval(async () => {
-    const announcement = await checkAnnouncements();
-    if (announcement) {
-      showNotification({
-        message: announcement.message,
-        color: announcement.color || COLORS.success,
-        timeout: announcement.timeout || 5000
+    const announcements = await checkAnnouncements();
+    if (announcements && announcements.length > 0) {
+      announcements.forEach(announcement => {
+        const notificationOptions = {
+          message: announcement.message,
+          color: announcement.color || COLORS.success,
+          timeout: announcement.timeout || 5000,
+          isPrompt: announcement.buttons?.length > 0
+        };
+
+        if (announcement.buttons) {
+          notificationOptions.buttons = announcement.buttons.map(btn => ({
+            text: btn.text,
+            color: btn.color,
+            action: typeof btn.action === 'string' ? new Function(btn.action) : undefined
+          }));
+        }
+
+        showNotification(notificationOptions);
       });
     }
   }, ANNOUNCEMENT_CHECK_INTERVAL);
@@ -191,19 +219,43 @@ function updateUIColors(color) {
 
 // Initialize UI color
 function initializeUIColor() {
-  const color = localStorage.getItem('uiColor') || DEFAULT_UI_COLOR;
+  const color = getSettings().uiColor || DEFAULT_UI_COLOR;
   updateUIColors(color);
   return color;
 }
 
 // Common notification system
-function showNotification(options) {
-  const notification = document.getElementById('notification');
-  if (!notification) {
-    console.error('Notification element not found');
-    return;
-  }
+const notificationQueue = [];
+const NOTIFICATION_SPACING = 10; // pixels between notifications
 
+function createNotificationElement() {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  document.body.appendChild(notification);
+  return notification;
+}
+
+function removeNotification(notificationElement) {
+  notificationElement.style.opacity = '0';
+  setTimeout(() => {
+    if (notificationElement.parentElement) {
+      notificationElement.parentElement.removeChild(notificationElement);
+    }
+    // Reposition remaining notifications
+    repositionNotifications();
+  }, 300); // Match transition duration in CSS
+}
+
+function repositionNotifications() {
+  const notifications = document.querySelectorAll('.notification');
+  let currentTop = NOTIFICATION_SPACING;
+  notifications.forEach(notif => {
+    notif.style.top = currentTop + 'px';
+    currentTop += notif.offsetHeight + NOTIFICATION_SPACING;
+  });
+}
+
+function showNotification(options) {
   if (typeof options === 'string') {
     options = { message: options };
   }
@@ -216,6 +268,7 @@ function showNotification(options) {
     isPrompt = false
   } = options;
 
+  const notification = createNotificationElement();
   notification.innerHTML = message;
   notification.style.background = color;
   notification.style.color = getBestTextColor(color);
@@ -231,7 +284,7 @@ function showNotification(options) {
       button.textContent = btn.text;
       button.onclick = () => {
         if (btn.action) btn.action();
-        notification.style.display = 'none';
+        removeNotification(notification);
       };
       if (btn.color) {
         button.style.background = btn.color;
@@ -244,11 +297,16 @@ function showNotification(options) {
     notification.appendChild(buttonsContainer);
   }
 
+  // Position the notification
   notification.style.display = 'block';
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    repositionNotifications();
+  }, 50);
 
   if (!isPrompt && timeout > 0) {
     setTimeout(() => {
-      notification.style.display = 'none';
+      removeNotification(notification);
     }, timeout);
   }
 

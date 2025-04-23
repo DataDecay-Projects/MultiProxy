@@ -143,7 +143,7 @@ document.getElementById('selectSite').addEventListener('click', () => {
     name: preset.selectedOptions[0].text
   };
   
-  sessionStorage.setItem('selectedProxy', JSON.stringify(selectedSite));
+  localStorage.setItem('selectedProxy', JSON.stringify(selectedSite));
   window.location.href = 'index.html';
 });
 
