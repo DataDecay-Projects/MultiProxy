@@ -6,7 +6,7 @@
     <title>{% if page.title %}{{ page.title }} - {% endif %}MultiProxy</title>
     <link rel="stylesheet" href="{{ '/styles.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-
+    <link rel="manifest" href="manifest.json">
     <script type="module">
         import { initializeUIColor, startAnnouncementChecks } from "{{ '/shared.js?v=' | append: site.github.build_revision | relative_url }}";
         initializeUIColor();
