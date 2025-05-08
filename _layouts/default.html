@@ -8,8 +8,9 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="manifest.json">
     <script type="module">
-        import { initializeUIColor } from "{{ '/shared.js?v=' | append: site.github.build_revision | relative_url }}";
+        import { initializeUIColor, startAnnouncementChecks } from "{{ '/shared.js?v=' | append: site.github.build_revision | relative_url }}";
         initializeUIColor();
+        startAnnouncementChecks();
     </script>
 </head>
 <body>

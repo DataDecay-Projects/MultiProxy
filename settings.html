@@ -5,27 +5,8 @@ title: Settings
 
 <div id="notification"></div>
 
-<div class="settings-container">
-  <div class="settings-section">
-    <h2>Display Settings</h2>
-    <div class="setting-item">
-      <label for="uiColor">UI Color:</label>
-      <div class="color-setting">
-        <input type="color" id="uiColor" value="#009900">
-        <button id="resetColor" class="small-button">Reset to Default</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="settings-section">
-    <h2>Data Management</h2>
-    <div class="setting-item">
-      <button id="clearQuickTiles" class="danger-button">Clear All Quick Access Tiles</button>
-    </div>
-    <div class="setting-item">
-      <button id="clearSavedSites" class="danger-button">Clear All Saved Proxy Sites</button>
-    </div>
-  </div>
+<div id="settings-container" class="settings-container">
+  <!-- Settings will be dynamically populated here -->
 </div>
 
 <script type="module" src="{{ '/settings.js?v=' | append: site.github.build_revision | relative_url }}"></script>

@@ -1,4 +1,4 @@
-import { showNotification, COLORS } from './shared.js';
+import { showNotification, COLORS, getSettings, updateSettings } from './shared.js';
 
 // DOM Elements
 const site = document.getElementById("site");
@@ -10,15 +10,15 @@ const tileUrl = document.getElementById('tileUrl');
 const saveTileButton = document.getElementById('saveTile');
 const cancelTileButton = document.getElementById('cancelTile');
 let selectedColor = COLORS.success;
-
 // Check for selected proxy
-const selectedProxy = JSON.parse(sessionStorage.getItem('selectedProxy'));
+const selectedProxy = JSON.parse(localStorage.getItem('selectedProxy'));
 if (!selectedProxy) {
   window.location.href = 'sites.html';
+  console.warn('No proxy site selected');
 }
-
-document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
-
+if (selectedProxy) {
+  document.getElementById('selectedSite').textContent = `Using: ${selectedProxy.name || selectedProxy.host}`;
+}
 // URL handling
 function toURL(input) {
   try {
@@ -35,13 +35,11 @@ function toURL(input) {
 // Codec handling
 async function getCodec(name) {
   if (!name) {
-
     console.error('No codec name provided');
     showNotification({ 
       message: 'Error: No codec specified', 
       color: COLORS.error 
     });
-
     return null;
   }
 
@@ -100,7 +98,6 @@ async function bypass() {
       message: 'Server Error: Failed to encode URL', 
       color: COLORS.error 
     });
-
     return;
   }
 
@@ -121,7 +118,7 @@ async function bypass() {
 
 // Quick Tiles Management
 function loadQuickTiles() {
-  const tiles = JSON.parse(localStorage.getItem('quickTiles') || '[]');
+  const { quickTiles: tiles } = getSettings();
   quickTiles.innerHTML = '';
   tiles.forEach((tile, index) => {
     const tileButton = document.createElement('button');
@@ -153,8 +150,9 @@ function loadQuickTiles() {
             text: 'Yes',
             color: COLORS.error,
             action: () => {
-              tiles.splice(index, 1);
-              localStorage.setItem('quickTiles', JSON.stringify(tiles));
+              const settings = getSettings();
+              settings.quickTiles.splice(index, 1);
+              updateSettings(settings);
               loadQuickTiles();
               showNotification({ 
                 message: 'Quick access tile removed',
@@ -246,9 +244,9 @@ saveTileButton.addEventListener('click', () => {
     return;
   }
 
-  const tiles = JSON.parse(localStorage.getItem('quickTiles') || '[]');
-  tiles.push({ text, url, color: selectedColor });
-  localStorage.setItem('quickTiles', JSON.stringify(tiles));
+  const settings = getSettings();
+  settings.quickTiles.push({ text, url, color: selectedColor });
+  updateSettings(settings);
   
   tileEditor.style.display = 'none';
   addTileButton.style.display = 'block';

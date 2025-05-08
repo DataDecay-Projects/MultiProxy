@@ -75,24 +75,25 @@ button:hover {
 }
 
 #notification {
+  display: none;  /* Keep this for legacy compatibility */
+}
+
+.notification {
   position: fixed;
-  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   padding: 15px;
   margin: 10px 0;
   font-family: monospace;
   font-weight: bold;
-  display: none;
   text-align: center;
-  border: 2px solid;
   z-index: 1000;
   min-width: 300px;
   max-width: 80%;
-  color: var(--ui-text-color);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, top 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease-in-out;
-}
+  color: var(--ui-text-color);
 }
 
 .notification-message {
@@ -100,7 +101,6 @@ button:hover {
   width: 100%;
   color: white;
 }
-
 
 .notification-buttons {
   display: flex;
@@ -114,12 +114,12 @@ button:hover {
   min-width: 80px;
   margin: 0 !important;
   padding: 5px 15px !important;
-  border: 2px solid;
   transition: opacity 0.2s ease-in-out;
+  border: 2px solid !important;
 }
 
 .notification-button:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 #quickAccessSection {
@@ -306,6 +306,26 @@ a {
   height: 30px;
   padding: 0;
   border: 2px solid black;
+}
+
+.text-setting input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 2px solid #ccc;
+  font-family: monospace;
+}
+
+.text-setting input[type="text"]:focus {
+  border-color: var(--ui-color);
+  outline: none;
+}
+
+.setting-description {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+  line-height: 1.4;
 }
 
 .danger-button {

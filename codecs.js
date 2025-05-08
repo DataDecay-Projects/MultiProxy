@@ -88,7 +88,6 @@ registerCodec('incog', {
     }
 });
 
-// Export functions to get and list codecs
 export function getCodec(name) {
     return codecRegistry.get(name);
 }
@@ -97,7 +96,6 @@ export function listCodecs() {
     return Array.from(codecRegistry.keys());
 }
 
-// Export individual codecs for backwards compatibility
 export const none = codecRegistry.get('none');
 export const plain = codecRegistry.get('plain');
 export const xor = codecRegistry.get('xor');
