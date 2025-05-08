@@ -42,6 +42,12 @@
       "host": "https://key.vpn38.ru/uv/service/",
       "codec": "xor", 
       "MARKER!!": "PASTE THE CODE BLOCK AFTER THE NEXT }!"
+    },
+    {
+    "id": "8",
+    "name": "Doge V4",
+    "host": "https://amir1.cuza16.ro/service/",
+    "codec": "xor"
     }
   ]
 }

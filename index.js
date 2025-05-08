@@ -174,6 +174,28 @@ function loadQuickTiles() {
     quickTiles.appendChild(tileButton);
   });
 }
+/*function loadQuickTiles() {
+  
+  const tiles = JSON.parse(localStorage.getItem('gameList') || '[]');
+  quickTiles.innerHTML = '';
+  tiles.forEach((tile, index) => {
+    const tileButton = document.createElement('button');
+    tileButton.className = 'quick-tile';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'quick-tile-text';
+    textSpan.textContent = tile.text;
+    tileButton.appendChild(textSpan);
+    
+    tileButton.style.background = tile.color || '#f4f4f4';
+    tileButton.addEventListener('click', () => {
+      site.value = tile.url;
+      bypass();
+      site.value = '';
+    });
+    gameList.appendChild(tileButton);
+  });
+}
 
 // Event Listeners
 site.addEventListener("keypress", (event) => {
@@ -192,7 +214,7 @@ document.querySelectorAll('.color-option').forEach(option => {
     selectedColor = option.dataset.color;
     showNotification({ message: 'Color selected', color: selectedColor });
   });
-});
+});*/
 
 document.querySelector('.color-option').classList.add('selected');
 
