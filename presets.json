@@ -7,8 +7,8 @@
   "presets": [
     {
       "id": "1",
-      "name": "Tinf0il (fastest)",
-      "host": "https://nono.datadecay.dev/uv/service/",
+      "name": "Tinf0il (nevin.club)",
+      "host": "https://nevin.club/uv/service/",
       "codec": "xor"
     },
     {
@@ -71,6 +71,6 @@
           "name": "Canlite",
           "host": "https://zyh82z65heuq.fairway.cl/~/uv/",
           "codec": "xor"
-          }
+        }
   ]
 }
