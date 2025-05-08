@@ -53,6 +53,18 @@
     "name": "Doge V4",
     "host": "https://amir1.cuza16.ro/service/",
     "codec": "xor"
-    }
+    },
+    {
+      "id": "9",
+      "name": "Doge V4 #2",
+      "host": "https://doge.gracyjohns.cl/service/",
+      "codec": "xor"
+      },
+      {
+        "id": "9",
+        "name": "{broken} Coffee",
+        "host": "https://recycle.wspaperbag.com/~/",
+        "codec": "xor"
+        }
   ]
 }
