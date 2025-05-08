@@ -44,7 +44,7 @@ async function getCodec(name) {
   }
 
   try {
-    const { getCodec } = await import('./codecs.js?{{ site.github.build_revision }}');
+    const { getCodec } = await import('./codecs.js');
     const codec = getCodec(name);
     
     if (!codec) {
@@ -193,7 +193,7 @@ function loadQuickTiles() {
     });
     gameList.appendChild(tileButton);
   });
-}
+}*/
 
 // Event Listeners
 site.addEventListener("keypress", (event) => {
@@ -212,7 +212,7 @@ document.querySelectorAll('.color-option').forEach(option => {
     selectedColor = option.dataset.color;
     showNotification({ message: 'Color selected', color: selectedColor });
   });
-});*/
+});
 
 document.querySelector('.color-option').classList.add('selected');
 

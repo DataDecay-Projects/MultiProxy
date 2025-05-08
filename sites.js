@@ -89,11 +89,54 @@ function saveCustomSite() {
 // Event handlers
 document.getElementById('saveCustom').addEventListener('click', saveCustomSite);
 
+function populatePresetDropdown(presets, includes) {
+  // Clear existing preset options (except the default, custom, and saved sites sections)
+  const presetsGroup = document.querySelector('optgroup[label="Presets"]');
+  const incognitoGroup = document.querySelector('optgroup[label="Incognito (slow)"]');
+  
+  if (presetsGroup) presetsGroup.innerHTML = '';
+  if (incognitoGroup) incognitoGroup.innerHTML = '';
+  
+  // Group presets by type using the includes property
+  const standardPresets = presets.filter(p => {
+    const lowerName = p.name.toLowerCase();
+    return !includes.some(include => lowerName.includes(include.toLowerCase()));
+  });
+  
+  const incogPresets = presets.filter(p => {
+    const lowerName = p.name.toLowerCase();
+    return includes.some(include => lowerName.includes(include.toLowerCase()));
+  });
+  
+  // Add standard presets
+  if (presetsGroup) {
+    standardPresets.forEach(p => {
+      const option = document.createElement('option');
+      option.value = p.id;
+      option.textContent = p.name;
+      presetsGroup.appendChild(option);
+    });
+  }
+  
+  // Add incognito presets
+  if (incognitoGroup) {
+    incogPresets.forEach(p => {
+      const option = document.createElement('option');
+      option.value = p.id;
+      option.textContent = p.name;
+      incognitoGroup.appendChild(option);
+    });
+  }
+}
+
 let presetData = [];
-fetch('./presets.json?{{ site.github.build_revision }}')
+let includesData = [];
+fetch('./presets.json?v=' + Math.round((Math.pow(36, 5 + 1) - Math.random() * Math.pow(36, 5))).toString(36).slice(1))
   .then(response => response.json())
   .then(data => {
     presetData = data.presets;
+    includesData = data.includes || [];
+    populatePresetDropdown(presetData, includesData);
   })
   .catch(error => console.error('Error loading presets:', error));
 
