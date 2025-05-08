@@ -1,4 +1,9 @@
 {
+  "includes": [
+    "incognito",
+    "ultraviolet",
+    "scramjet"
+  ],
   "presets": [
     {
       "id": "1",
