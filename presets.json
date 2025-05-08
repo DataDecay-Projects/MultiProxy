@@ -65,6 +65,12 @@
         "name": "{broken} Coffee",
         "host": "https://recycle.wspaperbag.com/~/",
         "codec": "xor"
-        }
+        },
+        {
+          "id": "10",
+          "name": "Canlite",
+          "host": "https://zyh82z65heuq.fairway.cl/~/uv/",
+          "codec": "xor"
+          }
   ]
 }
