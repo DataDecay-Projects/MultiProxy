@@ -6,12 +6,6 @@
   ],
   "presets": [
     {
-      "id": "1",
-      "name": "Tinf0il (nevin.club)",
-      "host": "https://nevin.club/uv/service/",
-      "codec": "xor"
-    },
-    {
       "id": "2", 
       "name": "Ultraviolet",
       "host": "https://datadecay.koyeb.app/~/uv/",
